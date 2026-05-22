@@ -1,5 +1,22 @@
 # Brand-AId — Claude Code Guidelines
 
+## Persistent Context — Read This First
+
+The `docs/` folder is the source of truth for project state across sessions and devices. Always read the relevant docs before starting work:
+
+| File | What it contains |
+|------|-----------------|
+| [docs/architecture.md](docs/architecture.md) | Full system diagram, tech stack, API contract, directory map |
+| [docs/current_status.md](docs/current_status.md) | What is done, what is not done, immediate next steps |
+| [docs/decisions.md](docs/decisions.md) | Why things were built the way they were — read before changing architecture |
+| [docs/workflows.md](docs/workflows.md) | How to run locally, node version, env vars, git workflow |
+| [docs/backlog.md](docs/backlog.md) | Prioritized remaining work + known bugs |
+| [docs/deployment.md](docs/deployment.md) | How to deploy for the demo |
+
+**After completing a meaningful chunk of work, update `docs/current_status.md` and `docs/backlog.md`.**
+
+---
+
 ## What This Project Is
 
 Brand-AId is an AI-powered campaign simulation engine built for **Infinity AI Buildfest 2026** (Branding & Marketing / MarTech track).
