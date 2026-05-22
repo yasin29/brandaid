@@ -1,0 +1,440 @@
+# AI Brand Simulation Engine — Project Context
+
+## Competition Context
+
+We are participating in:
+
+- Competition: Infinity AI Buildfest 2026
+- Track: Innovation Tracks Challenge
+- Category: Branding & Marketing (MarTech)
+
+Challenge:
+Build an AI-first brand simulation platform that predicts campaign outcomes before launch.
+
+Core Requirement:
+The system should simulate campaign performance, estimate likely outcomes, and help marketers make better strategic decisions before spending marketing budget.
+
+Important judging expectations:
+- AI-first architecture
+- Multimodal AI
+- LLM integration
+- RAG / Vector DB usage
+- Explainability
+- Business viability
+- Scalability
+- Innovation
+- Strong presentation/demo
+
+---
+
+# Core Product Vision
+
+This is NOT:
+- a traditional analytics dashboard
+- a post-campaign reporting system
+- a generic marketing assistant
+
+This IS:
+- a synthetic market simulation platform
+- an AI-powered campaign forecasting engine
+- a pre-launch decision intelligence system
+
+Core idea:
+"Test your campaign against a synthetic market before launching it."
+
+The AI simulates how different audience personas may react to a campaign before real money is spent.
+
+---
+
+# Product Positioning
+
+The platform helps marketers:
+- test campaigns before launch
+- forecast possible outcomes
+- identify risks
+- improve messaging
+- compare strategic scenarios
+- reduce wasted ad spend
+
+The product should feel:
+- futuristic
+- AI-native
+- strategic
+- multimodal
+- simulation-driven
+
+NOT like a normal dashboard.
+
+---
+
+# IMPORTANT PROJECT CONSTRAINTS
+
+Timeline:
+- Extremely short (3–4 days total)
+
+Team:
+- One primary developer handling architecture, backend, frontend, orchestration, and deployment
+
+Infrastructure:
+- No GPU
+- API-first architecture
+- Cloud AI providers only
+
+Development Strategy:
+- Rapid iteration using Claude Code
+- Build vertically
+- Prioritize demo quality over massive feature count
+
+DO NOT:
+- overengineer
+- build huge analytics systems
+- train custom ML models
+- create massive infrastructure
+- attempt production enterprise scope
+
+Focus on:
+- believable AI intelligence
+- simulation experience
+- strong UX
+- compelling demo flow
+
+---
+
+# PRELIMINARY MVP SCOPE
+
+## User Inputs
+
+The system accepts:
+
+1. Campaign Objective
+2. Platform
+3. Target Audience
+4. Budget
+5. Ad Copy
+6. Campaign Image Upload
+
+No additional inputs for MVP.
+
+---
+
+# Core AI Workflow
+
+## Stage 1 — Campaign Analysis
+
+AI analyzes:
+- emotional tone
+- CTA strength
+- audience fit
+- trust signals
+- clarity
+- emotional appeal
+
+Uses:
+- multimodal LLM analysis
+
+---
+
+## Stage 2 — Synthetic Persona Generation
+
+Generate 3 synthetic audience personas:
+
+Examples:
+- Gen Z audience
+- Corporate professional
+- Value-conscious buyer
+
+Each persona has:
+- preferences
+- emotional tendencies
+- buying motivations
+- likely objections
+
+Static templates are acceptable for MVP initially. If time permits, will aim to move towards being dynamic.
+
+---
+
+## Stage 3 — Audience Simulation
+
+Each persona simulates:
+- engagement likelihood
+- emotional reaction
+- trust level
+- conversion likelihood
+- objections
+
+This is the CORE innovation layer.
+
+---
+
+## Stage 4 — Forecast Engine
+
+AI generates:
+- predicted CTR range
+- engagement estimate
+- conversion trend
+- confidence level
+- ROI direction
+
+Important:
+These are directional simulations, NOT guaranteed predictions.
+
+---
+
+## Stage 5 — Recommendation Engine
+
+AI suggests:
+- improved CTA
+- stronger messaging
+- audience refinement
+- platform strategy
+- optimization suggestions
+
+---
+
+## Stage 6 — Re-Simulation
+
+User clicks:
+"Generate Optimized Version"
+
+AI:
+- rewrites campaign copy
+- improves campaign strategy
+- reruns simulation
+- compares improved result
+
+This is a major demo feature.
+
+---
+
+# RAG + VECTOR DB REQUIREMENT
+
+The competition expects:
+- RAG
+- Vector DB
+- modern AI architecture
+
+We will implement LIGHTWEIGHT RAG. If possible down the line, proper RAG and MCP as well.
+
+Purpose:
+Support the simulation engine.
+
+NOT:
+build a massive retrieval platform.
+
+---
+
+# RAG KNOWLEDGE BASE CONTENT
+
+Possible documents:
+- marketing benchmarks
+- CTR benchmark ranges
+- engagement benchmark references
+- campaign psychology notes
+- audience behavior patterns
+- platform best practices
+- internal historical campaign examples
+
+---
+
+# Vector DB
+
+Recommended:
+- ChromaDB
+
+Embeddings:
+- OpenAI text-embedding-3-small
+
+Purpose:
+Retrieve contextual marketing intelligence during simulation.
+
+---
+
+# SYSTEM ARCHITECTURE
+
+Frontend (React)
+↓
+FastAPI Backend
+↓
+Simulation Orchestrator
+↓
+RAG Retrieval Layer
+↓
+OpenAI APIs
+
+---
+
+# FRONTEND SCREENS
+
+## Screen 1 — Campaign Input
+
+Inputs:
+- image upload
+- campaign copy
+- objective
+- audience
+- budget
+- platform
+
+Button:
+"Run Simulation"
+
+---
+
+## Screen 2 — AI Processing Screen
+
+Animated progress states:
+- analyzing campaign
+- generating personas
+- simulating audience
+- forecasting performance
+
+Important:
+This screen should feel cinematic/futuristic.
+
+---
+
+## Screen 3 — Results Dashboard
+
+Sections:
+- campaign summary
+- persona reactions
+- forecast metrics
+- risks
+- recommendations
+- optimized rerun comparison
+
+---
+
+# GOLDEN DEMO FLOW
+
+1. User uploads campaign
+2. AI analyzes campaign
+3. Synthetic personas react
+4. Forecast generated
+5. Risks identified
+6. AI recommendations shown
+7. Optimized version generated
+8. Re-simulation compares results
+
+This is the PRIMARY DEMO PATH.
+
+---
+
+# IMPORTANT DEVELOPMENT STRATEGY
+
+Build VERTICAL SLICES.
+
+DO NOT:
+- build everything at once
+- over-architect
+- create giant abstractions early
+
+FIRST GOAL:
+Get ONE complete end-to-end AI flow working.
+
+Meaning:
+Input → AI → Output
+
+Only after that:
+expand features.
+
+---
+
+# TECH STACK
+
+Frontend:
+- React
+- TailwindCSS
+- shadcn/ui
+
+Backend:
+- FastAPI
+
+AI:
+- OpenAI multimodal models
+
+Vector DB:
+- ChromaDB
+
+
+---
+
+# DEVELOPMENT PRIORITIES
+
+Priority Order:
+
+1. Working AI pipeline
+2. Working frontend/backend integration
+3. Structured AI responses
+4. Good UI/UX
+5. Persona simulation
+6. Forecast display
+7. Re-simulation flow
+8. RAG integration
+9. Additional enhancements
+
+---
+
+# IMPORTANT NON-GOALS
+
+DO NOT BUILD INITIALLY:
+- authentication
+- user management
+- massive databases
+- enterprise dashboards
+- real-time scraping
+- advanced analytics systems
+- huge campaign management systems
+- full marketing platform
+- true ML training pipelines
+
+We will add this incrementally if time permits. First goal is to just gain momentum building.
+
+---
+
+# DESIGN GOAL
+
+The product should feel:
+- premium
+- intelligent
+- futuristic
+- AI-native
+- visually impressive
+
+The judges should feel:
+"This could become a real AI startup."
+
+---
+
+# KEY PRODUCT NARRATIVE
+
+Brands waste millions testing campaigns blindly.
+
+This platform creates a synthetic market environment where campaigns can be simulated before launch.
+
+The AI acts as:
+- strategist
+- analyst
+- synthetic audience
+- optimization engine
+- decision support system
+
+The focus is:
+AI-native campaign simulation.
+
+NOT analytics dashboards.
+
+---
+
+# MOST IMPORTANT RULE
+
+DO NOT OVERBUILD.
+
+Focus on:
+- polished demo
+- believable intelligence
+- smooth UX
+- strong storytelling
+- stable AI outputs
+
+A polished focused system is more valuable than a giant unfinished platform.
