@@ -13,7 +13,34 @@ The `docs/` folder is the source of truth for project state across sessions and 
 | [docs/backlog.md](docs/backlog.md) | Prioritized remaining work + known bugs |
 | [docs/deployment.md](docs/deployment.md) | How to deploy for the demo |
 
-**After completing a meaningful chunk of work, update `docs/current_status.md` and `docs/backlog.md`.**
+---
+
+## Documentation Sync Rule — ALWAYS ENFORCED
+
+Context must never go stale. Apply these rules without being asked:
+
+### On every session start
+1. Read `docs/current_status.md` to know exactly where things stand
+2. Read `docs/backlog.md` to know what's next
+3. If the task involves architecture or a past decision, read the relevant doc before touching code
+
+### Trigger → Doc to update
+
+| What just happened | Update this doc |
+|--------------------|-----------------|
+| A task is completed (feature, fix, integration) | `docs/current_status.md` — move item from "Not Done" to "Done", update "Immediate Next Steps" |
+| A backlog item is done, added, or reprioritized | `docs/backlog.md` |
+| A new architectural choice is made (new service, new pattern, changed data flow) | `docs/architecture.md` |
+| A technical decision is made with a non-obvious reason | `docs/decisions.md` — add an entry with the decision and why |
+| How to run/develop/deploy the project changes | `docs/workflows.md` or `docs/deployment.md` |
+| A new bug is found | `docs/backlog.md` — add to the Known Issues table |
+| A bug is fixed | `docs/backlog.md` — mark as Fixed in Known Issues |
+
+### Hard rules
+- Never end a session that completed meaningful work without updating at least `current_status.md`
+- Keep doc updates factual and concise — no padding
+- Always update the `Last updated` date at the top of `current_status.md`
+- If something in a doc is now wrong or outdated, fix it immediately — stale docs are worse than no docs
 
 ---
 
