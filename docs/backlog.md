@@ -10,7 +10,7 @@ Items are grouped by priority tier. Within each tier, order matters.
 
 These are required for the demo to work and impress judges.
 
-- [ ] **End-to-end smoke test** — run the full pipeline with a real API key and verify the JSON response is correct
+- [x] **End-to-end smoke test** — run the full pipeline with a real API key and verify the JSON response is correct
 - [ ] **Polish InputPage UI** — replace raw HTML inputs with shadcn components (Input, Textarea, Select, Label, Card, Button); apply dark futuristic design
 - [ ] **Cinematic ProcessingPage** — replace spinner with animated stage-by-stage progress (animated text, pulsing glow, progress bar or step indicators)
 - [ ] **Polish ResultsDashboard** — styled sections for: campaign score, persona reaction cards, forecast metric tiles, risk list, recommendation panel
@@ -68,3 +68,4 @@ Do not build these during the competition sprint.
 | 2 | Node 18 (system default) incompatible with Vite 9 — must use Node 22 via nvm | Medium | Documented in workflows.md |
 | 3 | `baseUrl` in tsconfig deprecated in TS6 — removed, using `paths` alone with `moduleResolution: bundler` | Low | Fixed |
 | 4 | Image uploads accumulate in `backend/uploads/` with no cleanup | Low | Open |
+| 5 | `max_tokens` not supported by newer OpenAI models — replaced with `max_completion_tokens` in all 4 service files | Medium | Fixed |

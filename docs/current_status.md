@@ -1,8 +1,8 @@
 # Current Status
 
-**Last updated:** 2026-05-22
+**Last updated:** 2026-05-24
 **Branch:** main
-**Last commit:** `4448dc1` — Initialize project: full stack scaffold
+**Last commit:** `4e33841` — Refactor: rename max_tokens to max_completion_tokens in multiple services
 
 ---
 
@@ -68,8 +68,8 @@
 - [ ] No mobile responsiveness
 
 ### Integration
-- [ ] End-to-end flow NOT tested yet (requires a real OpenAI API key in `.env`)
-- [ ] CORS not tested across ports
+- [x] End-to-end smoke test passed — full pipeline confirmed working
+- [x] CORS confirmed working across ports (frontend → backend)
 
 ### Deployment
 - [ ] No deployment configured yet
@@ -78,8 +78,7 @@
 
 ## Immediate Next Steps (Priority Order)
 
-1. **Test end-to-end flow** — add API key to `.env`, run backend + frontend, submit a real campaign
-2. **Polish the UI** — replace raw inputs with shadcn components, apply dark futuristic design
+1. **Polish the UI** — replace raw inputs with shadcn components, apply dark futuristic design
 3. **Cinematic processing screen** — animated stage progression with visual flair
 4. **Results dashboard design** — persona cards, forecast gauges, risk chips
 5. **RAG integration** — seed knowledge base, implement retrieval in simulation
