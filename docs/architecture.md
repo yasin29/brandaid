@@ -39,8 +39,10 @@ SimulationResult (JSON) → Frontend
 |--------------|---------------------------------------------------------|----------------------------------------|
 | Frontend     | React 18, Vite, TypeScript                              | Node 22 required                       |
 | Styling      | TailwindCSS v4, shadcn/ui (Radix), tw-animate-css       | Dark theme by default                  |
+| Charts       | Chart.js (via `chart.js/auto`)                          | Radar chart; sparklines use SVG        |
 | Backend      | FastAPI, Python 3.12, Uvicorn                           | Async throughout                       |
 | AI           | OpenAI SDK 2.38.0 (AsyncOpenAI)                         | Model names read from .env             |
+| ML Forecast  | scikit-learn (planned — Tier 2)                         | Random Forest on Kaggle ad dataset     |
 | Vector DB    | ChromaDB (local)                                        | Committed to git for multi-device sync |
 | Embeddings   | OpenAI (model via .env)                                 | Used for RAG retrieval                 |
 
@@ -59,7 +61,8 @@ brand-AId/
 │   ├── current_status.md
 │   ├── workflows.md
 │   ├── deployment.md
-│   └── backlog.md
+│   ├── backlog.md
+│   └── design_reference.md   # team PRD analysis + UI patterns adopted
 ├── backend/
 │   ├── main.py                  # FastAPI app entrypoint
 │   ├── requirements.txt
@@ -118,7 +121,10 @@ brand-AId/
 
 ```json
 {
-  "campaign_analysis": { "emotional_tone": "...", "cta_strength": "...", "overall_score": 72, ... },
+  "campaign_analysis": {
+    "emotional_tone": "...", "cta_strength": "...", "overall_score": 72,
+    "dimension_scores": { "emotional_tone": 7, "cta_strength": 8, "audience_fit": 6, "trust_signals": 5, "clarity": 9, "emotional_appeal": 7 }
+  },
   "personas": [{ "persona_name": "Alex", "persona_type": "Gen Z", "engagement_likelihood": "High", ... }],
   "forecast": { "ctr_range": "1.2%–2.8%", "roi_direction": "Positive", "confidence_level": "Medium", ... },
   "risks": ["..."],

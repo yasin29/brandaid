@@ -25,6 +25,15 @@ export interface ForecastMetrics {
   roi_direction: 'Negative' | 'Neutral' | 'Positive'
 }
 
+export interface DimensionScores {
+  emotional_tone: number
+  cta_strength: number
+  audience_fit: number
+  trust_signals: number
+  clarity: number
+  emotional_appeal: number
+}
+
 export interface CampaignAnalysis {
   emotional_tone: string
   cta_strength: string
@@ -33,6 +42,7 @@ export interface CampaignAnalysis {
   clarity: string
   emotional_appeal: string
   overall_score: number
+  dimension_scores: DimensionScores
 }
 
 export interface Recommendation {

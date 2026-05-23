@@ -10,12 +10,14 @@ Items are grouped by priority tier. Within each tier, order matters.
 
 These are required for the demo to work and impress judges.
 
-- [x] **End-to-end smoke test** — run the full pipeline with a real API key and verify the JSON response is correct
-- [ ] **Polish InputPage UI** — replace raw HTML inputs with shadcn components (Input, Textarea, Select, Label, Card, Button); apply dark futuristic design
-- [ ] **Cinematic ProcessingPage** — replace spinner with animated stage-by-stage progress (animated text, pulsing glow, progress bar or step indicators)
-- [ ] **Polish ResultsDashboard** — styled sections for: campaign score, persona reaction cards, forecast metric tiles, risk list, recommendation panel
-- [ ] **Before/After re-simulation comparison** — side-by-side or toggle view showing original vs optimized campaign metrics
-- [ ] **Image upload preview** — show thumbnail after selecting an image on the input form
+- [x] **End-to-end smoke test** — full pipeline confirmed working with real API key
+- [x] **Polish InputPage V1** — shadcn components, platform Select, image preview, char counter, violet glow
+- [x] **Cinematic ProcessingPage** — pulsing violet orb, animated stage list, live progress bar
+- [x] **Polish ResultsDashboard V1** — score, persona cards with badges, forecast tiles, risks, before/after
+- [x] **Backend: DimensionScores** — numeric 0–10 sub-scores added to `CampaignAnalysis`; campaign analyzer prompt updated
+- [x] **ResultsPage V2** — Chart.js radar, count-up score, curtain reveal, "What's Working / Watch out" split, ranked rec cards, SVG sparklines, dramatic before/after
+- [x] **InputPage V2** — visual platform tiles (7 platforms, color-coded), budget slider + presets, animated dropzone
+- [ ] **RAG integration** — seed `backend/data/knowledge_base/` with marketing benchmark docs; implement `rag_service.py`; inject context into forecast + recommendation prompts
 
 ---
 
@@ -23,13 +25,11 @@ These are required for the demo to work and impress judges.
 
 These make the demo more compelling and the product more believable.
 
-- [ ] **RAG integration** — populate `backend/data/knowledge_base/` with marketing benchmark documents; implement `rag_service.py` to embed and retrieve context; inject retrieved context into forecast and recommendation prompts
-- [ ] **Dynamic persona generation** — instead of static PERSONA_TEMPLATES, generate persona profiles dynamically based on campaign target audience
-- [ ] **Animated score reveal** — campaign analysis overall score animates from 0 to the value (visual "wow" moment)
-- [ ] **Forecast confidence visualization** — visual indicator (gauge, color coding) for confidence level and ROI direction
-- [ ] **Persona reaction cards** — visually distinct cards per persona with emoji sentiment, engagement bar, objection tags
+- [ ] **ML forecast layer** — train lightweight sklearn Random Forest on Kaggle social media advertising dataset; add numeric `predicted_ctr`, `predicted_roas`, `predicted_conversions` fields to `ForecastMetrics`; enables ROAS-flip demo moment with real numbers. Target datasets: "Social Media Advertising Dataset", "Facebook Ad Campaign Performance". Architecture: `backend/app/services/ml_forecast_service.py` + `backend/data/models/` for joblib files.
+- [ ] **ROAS-flip demo moment** — dramatic before/after with animated numbers (requires ML layer for real numeric values)
+- [ ] **Dynamic persona generation** — generate persona profiles dynamically from campaign target audience instead of static templates
 - [ ] **Error handling UI** — proper error states on InputPage if simulation fails (not just a toast)
-- [ ] **Loading skeleton** on ResultsPage while waiting (if we split into two requests later)
+- [ ] **Loading skeleton** on ResultsPage while waiting
 
 ---
 
@@ -69,3 +69,15 @@ Do not build these during the competition sprint.
 | 3 | `baseUrl` in tsconfig deprecated in TS6 — removed, using `paths` alone with `moduleResolution: bundler` | Low | Fixed |
 | 4 | Image uploads accumulate in `backend/uploads/` with no cleanup | Low | Open |
 | 5 | `max_tokens` not supported by newer OpenAI models — replaced with `max_completion_tokens` in all 4 service files | Medium | Fixed |
+
+---
+
+## Design Reference Items (from team PRD analysis — 2026-05-24)
+
+Items we may adapt if time permits. Full context in `docs/design_reference.md`.
+
+- [ ] Multi-step campaign brief wizard (8-stage conversational flow with live brief side panel)
+- [ ] Market context signals panel (seasonal events, competitor spend signals)
+- [ ] Per-channel breakdown table (ROAS/CTR/orders per platform — needs ML layer)
+- [ ] Sticky bottom action bar on ResultsPage ("Export PDF / Get Launch Plan")
+- [ ] Confetti burst on before/after reveal

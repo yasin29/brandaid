@@ -29,6 +29,15 @@ class ForecastMetrics(BaseModel):
     roi_direction: str
 
 
+class DimensionScores(BaseModel):
+    emotional_tone: int
+    cta_strength: int
+    audience_fit: int
+    trust_signals: int
+    clarity: int
+    emotional_appeal: int
+
+
 class CampaignAnalysis(BaseModel):
     emotional_tone: str
     cta_strength: str
@@ -37,6 +46,7 @@ class CampaignAnalysis(BaseModel):
     clarity: str
     emotional_appeal: str
     overall_score: int
+    dimension_scores: DimensionScores
 
 
 class Recommendation(BaseModel):

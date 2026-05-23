@@ -63,5 +63,26 @@ A record of key decisions made during development, with rationale. Read this bef
 ### Decision: No authentication for MVP
 **Why:** Time constraint (3-4 days). Auth adds no demo value for a single-judge evaluation. Can be added post-competition if the product moves forward.
 
+---
+
+## Design & Visualization (added 2026-05-24)
+
+### Decision: Add numeric `DimensionScores` to `CampaignAnalysis` (backend schema change)
+**Why:** The radar chart visualization requires numeric values (0–10) per dimension. The LLM already generates qualitative descriptions; asking it to also return a numeric score in the same JSON call is cheap and gives us a proper data-backed visualization. Approximating from text in the frontend would be fragile and misleading.
+**How to apply:** `CampaignAnalysis` now has both string fields (existing) and a nested `DimensionScores` object with 6 integer fields (0–10). The analyzer prompt instructs the model to return `dimension_scores` as a nested object.
+
+### Decision: Chart.js for radar chart, SVG for sparklines
+**Why:** Chart.js radar is complex to implement manually in SVG. However, sparklines are simple enough to render as inline SVG paths without the library overhead. This minimizes bundle size while still getting the polished radar visualization.
+**How to apply:** `npm install chart.js`. Use `import { Chart, ... } from 'chart.js/auto'` for the radar. Sparklines use a simple `pathFromValues()` helper that generates an SVG path string.
+
+### Decision: Adopt team PRD design patterns selectively, not wholesale
+**Why:** Reviewed team PRD screens (`new-campaign.html`, `simulation-results.html`). Their product has a fundamentally different entry point (domain crawl → BusinessProfile → 8-step wizard). Adopting their entire flow would require an architectural rewrite. Instead we cherry-pick the highest-value UI patterns that fit our data model: radar chart, channel tiles, budget slider, "What's Working / Watch out" split, ranked rec cards, dramatic before/after.
+**How to apply:** See `docs/design_reference.md` for the full adoption list. We keep our dark violet theme; they use light indigo. The interaction patterns are adopted, not the palette.
+
+### Decision: Pursue ML forecast layer (Tier 2 priority)
+**Why:** The team PRD describes a "deterministic forecasting layer" using benchmark lookup tables. A lightweight sklearn model trained on real Kaggle ad performance data is better — it gives actual numeric predictions (CTR%, ROAS, conversion rate) instead of LLM estimates, is more defensible to judges, and enables the ROAS-flip demo moment with real numbers. The hybrid approach (ML for numbers + LLM for reasoning text) is more credible than pure LLM.
+**Architecture:** `backend/app/services/ml_forecast_service.py` loads a joblib-serialized sklearn model. `ForecastMetrics` gains `predicted_ctr_pct: float`, `predicted_roas: float`, `predicted_conversions: int` fields. Target datasets: "Social Media Advertising Dataset" on Kaggle. Model: Random Forest Regressor (fast to train, interpretable, handles tabular data well).
+**Risk:** Feature engineering — our inputs (platform, objective, budget, copy quality score) need to map to what the dataset has. May need to engineer proxy features. Time estimate: 4–6 hours including data exploration.
+
 ### Decision: Node 22 required (not Node 18)
 **Why:** Vite 9+ requires Node >= 20.19.0 or >= 22.12.0. Node 18 (the system default on the dev machine) fails. Use `nvm use 22.14.0` or ensure Node 22 is the default.

@@ -30,8 +30,12 @@ def _build_content(campaign: CampaignInput) -> list:
         "type": "text",
         "text": (
             f"You are a marketing strategist AI. Analyze this campaign and return a JSON object "
-            f"with exactly these keys: emotional_tone, cta_strength, audience_fit, trust_signals, "
-            f"clarity, emotional_appeal (each a short string), and overall_score (integer 1-100).\n\n"
+            f"with exactly these keys:\n"
+            f"- emotional_tone, cta_strength, audience_fit, trust_signals, clarity, emotional_appeal: "
+            f"each a short descriptive string (1-2 sentences)\n"
+            f"- overall_score: integer 1-100\n"
+            f"- dimension_scores: a nested object with the same 6 keys as above, each an integer 0-10 "
+            f"representing the numeric score for that dimension (0 = very weak, 10 = excellent)\n\n"
             f"Campaign Objective: {campaign.objective}\n"
             f"Platform: {campaign.platform}\n"
             f"Target Audience: {campaign.target_audience}\n"
