@@ -2,7 +2,7 @@
 
 **Last updated:** 2026-05-24
 **Branch:** main
-**Last commit:** `089a796` — Polish all three UI pages with dark futuristic design
+**Last commit:** `ff73c78` — Redesign UI to match team mock-up: light/dark hybrid, indigo + emerald theme
 
 ---
 
@@ -54,6 +54,11 @@
 - [x] **Frontend**: Installed Chart.js + updated TypeScript types for `DimensionScores`
 - [x] **ResultsPage V2**: Chart.js radar, count-up score animation, curtain reveal, "What's Working / Watch out" split, ranked rec cards, SVG sparklines, dramatic before/after side-by-side
 - [x] **InputPage V2**: Visual platform tiles (7 platforms, color-coded), budget slider + presets, animated drag-and-drop zone
+- [x] **Full UI redesign** — adopted team mock-up design system: light/dark hybrid, indigo (#4338CA) + emerald (#059669)
+  - App.tsx: removed dark wrapper, added `campaignSummary` (objective + platform) threaded to ResultsPage
+  - InputPage: light (#FAFAFE) background, white card form, native HTML inputs, indigo focus rings + channel tiles, large `$X,XXX` budget display
+  - ProcessingPage: indigo orb, pipeline step list matching team's loading overlay
+  - ResultsPage: dark hero with 4 metric cards + confidence breakdown bars; light 2-col body; emerald radar; sticky bottom action bar ("Rerun" + "Get Launch Plan")
 
 ---
 
