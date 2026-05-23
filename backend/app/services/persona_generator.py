@@ -29,7 +29,7 @@ async def generate_persona_reactions(campaign: CampaignInput) -> list[PersonaRea
         model=settings.openai_chat_model,
         messages=[{"role": "user", "content": prompt}],
         response_format={"type": "json_object"},
-        max_tokens=1000,
+        max_completion_tokens=1000,
     )
 
     data = json.loads(response.choices[0].message.content)

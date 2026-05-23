@@ -31,7 +31,7 @@ async def generate_forecast(
         model=settings.openai_chat_model,
         messages=[{"role": "user", "content": prompt}],
         response_format={"type": "json_object"},
-        max_tokens=600,
+        max_completion_tokens=600,
     )
 
     data = json.loads(response.choices[0].message.content)

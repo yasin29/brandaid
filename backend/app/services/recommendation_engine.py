@@ -24,7 +24,7 @@ async def generate_recommendations(
         model=settings.openai_chat_model,
         messages=[{"role": "user", "content": prompt}],
         response_format={"type": "json_object"},
-        max_tokens=800,
+        max_completion_tokens=800,
     )
 
     data = json.loads(response.choices[0].message.content)
