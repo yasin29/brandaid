@@ -8,7 +8,7 @@ import {
   Filler,
   Tooltip,
 } from 'chart.js'
-import type { SimulationResult, DimensionScores } from '@/types'
+import type { SimulationResult, DimensionScores, QAReview } from '@/types'
 
 Chart.register(RadarController, RadialLinearScale, PointElement, LineElement, Filler, Tooltip)
 
@@ -117,7 +117,7 @@ function RadarChart({ scores }: { scores: DimensionScores }) {
             ticks: { display: false, stepSize: 2 },
             grid: { color: '#E2E8F0' },
             angleLines: { color: '#E2E8F0' },
-            pointLabels: { font: { size: 11, weight: '600' }, color: '#64748B' },
+            pointLabels: { font: { size: 11, weight: 600 }, color: '#64748B' },
           },
         },
         plugins: {
@@ -362,6 +362,111 @@ function BeforeAfter({ result }: { result: SimulationResult }) {
   )
 }
 
+// ── QA Review Panel ───────────────────────────────────────────────────────────
+
+function verdictStyle(verdict: QAReview['verdict']) {
+  if (verdict === 'Pass')
+    return { bg: 'bg-emerald-50', border: 'border-emerald-200', badge: 'bg-emerald-600', text: 'text-emerald-700', icon: '✓' }
+  if (verdict === 'Partial Pass')
+    return { bg: 'bg-amber-50', border: 'border-amber-200', badge: 'bg-amber-500', text: 'text-amber-700', icon: '~' }
+  return { bg: 'bg-red-50', border: 'border-red-200', badge: 'bg-red-600', text: 'text-red-700', icon: '!' }
+}
+
+function severityStyle(s: 'low' | 'medium' | 'high') {
+  if (s === 'high') return 'bg-red-100 text-red-700 border-red-200'
+  if (s === 'medium') return 'bg-amber-100 text-amber-700 border-amber-200'
+  return 'bg-slate-100 text-slate-600 border-slate-200'
+}
+
+function QAReviewPanel({ qa }: { qa: QAReview }) {
+  const vs = verdictStyle(qa.verdict)
+  const [expanded, setExpanded] = useState(false)
+
+  return (
+    <section className={`px-8 py-5 border-b ${vs.bg} ${vs.border} border-x-0`}>
+      <div className="max-w-5xl mx-auto">
+        <div className="flex items-start gap-5 flex-wrap">
+
+          {/* Verdict badge */}
+          <div className="flex items-center gap-3 flex-shrink-0">
+            <div className={`w-10 h-10 rounded-full ${vs.badge} flex items-center justify-center text-white font-black text-lg`}>
+              {vs.icon}
+            </div>
+            <div>
+              <p className="text-[10px] text-slate-400 uppercase tracking-widest font-semibold">QA Reviewer</p>
+              <p className={`font-bold text-sm ${vs.text}`}>{qa.verdict}</p>
+            </div>
+          </div>
+
+          {/* Divider */}
+          <div className="w-px self-stretch bg-slate-200 hidden sm:block" />
+
+          {/* Confidence score */}
+          <div className="flex-shrink-0">
+            <p className="text-[10px] text-slate-400 uppercase tracking-widest font-semibold mb-1">Simulation Confidence</p>
+            <div className="flex items-center gap-2">
+              <span className={`text-2xl font-black ${vs.text}`}>{qa.confidence_score}</span>
+              <span className="text-slate-400 text-sm font-medium">/ 100</span>
+              <div className="w-20 h-1.5 bg-slate-200 rounded-full overflow-hidden ml-1">
+                <div
+                  className={`h-full rounded-full ${qa.confidence_score >= 70 ? 'bg-emerald-500' : qa.confidence_score >= 50 ? 'bg-amber-500' : 'bg-red-500'}`}
+                  style={{ width: `${qa.confidence_score}%` }}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Divider */}
+          <div className="w-px self-stretch bg-slate-200 hidden sm:block" />
+
+          {/* Reviewer notes */}
+          <div className="flex-1 min-w-[200px]">
+            <p className="text-[10px] text-slate-400 uppercase tracking-widest font-semibold mb-1">Reviewer Notes</p>
+            <p className="text-slate-700 text-sm leading-relaxed">{qa.reviewer_notes}</p>
+          </div>
+
+          {/* Flags toggle */}
+          {qa.flags.length > 0 && (
+            <button
+              onClick={() => setExpanded(e => !e)}
+              className="flex-shrink-0 flex items-center gap-2 text-xs font-semibold text-slate-600 border border-slate-300 bg-white px-3 py-1.5 rounded-lg hover:border-amber-400 hover:text-amber-700 transition-all"
+            >
+              <span className="w-5 h-5 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center text-[10px] font-black">
+                {qa.flags.length}
+              </span>
+              {expanded ? 'Hide flags' : 'View flags'}
+            </button>
+          )}
+
+          {/* No flags indicator */}
+          {qa.flags.length === 0 && (
+            <span className="text-xs text-emerald-600 font-semibold bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-lg flex-shrink-0">
+              No issues found
+            </span>
+          )}
+        </div>
+
+        {/* Expanded flags */}
+        {expanded && qa.flags.length > 0 && (
+          <div className="mt-4 pt-4 border-t border-slate-200 grid gap-2 sm:grid-cols-2">
+            {qa.flags.map((flag, i) => (
+              <div key={i} className="bg-white border border-slate-200 rounded-xl p-3 flex gap-3 items-start">
+                <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border flex-shrink-0 mt-0.5 uppercase tracking-wide ${severityStyle(flag.severity)}`}>
+                  {flag.severity}
+                </span>
+                <div>
+                  <p className="text-[11px] font-bold text-slate-500 uppercase tracking-wide mb-0.5">{flag.section}</p>
+                  <p className="text-slate-700 text-xs leading-relaxed">{flag.issue}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+  )
+}
+
 // ── Main component ────────────────────────────────────────────────────────────
 
 export default function ResultsPage({ result, campaignSummary, onReset }: Props) {
@@ -543,6 +648,9 @@ export default function ResultsPage({ result, campaignSummary, onReset }: Props)
           </div>
         </div>
       </section>
+
+      {/* ── QA Review Panel ── */}
+      {result.qa_review && <QAReviewPanel qa={result.qa_review} />}
 
       {/* ── Body (light 2-column) ── */}
       <section className="px-8 py-10">

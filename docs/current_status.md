@@ -60,6 +60,12 @@
   - ProcessingPage: indigo orb, pipeline step list matching team's loading overlay
   - ResultsPage: dark hero with 4 metric cards + confidence breakdown bars; light 2-col body; emerald radar; sticky bottom action bar ("Rerun" + "Get Launch Plan")
 
+### QA Reviewer Agent (2026-05-25)
+- [x] **`QAReview` + `QAFlag` schemas** — added to `schemas.py` and frontend `types/index.ts`
+- [x] **`qa_reviewer.py`** — Stage 7 of the pipeline; independent LLM pass reviewing full simulation output against 6 concrete criteria: forecast-persona consistency, risk specificity, recommendation-weakness alignment, persona differentiation, optimized copy quality, narrative coherence
+- [x] **`simulation_orchestrator.py`** — wired as Stage 7 after re-simulation completes
+- [x] **`ResultsPage.tsx`** — `QAReviewPanel` component: verdict badge (Pass/Partial Pass/Needs Improvement), confidence score + bar, reviewer notes, expandable flags list with severity tags; renders between hero and body
+
 ### ML Forecast Layer (2026-05-25)
 - [x] **Kaggle dataset** — `Global Ads Performance (Google, Meta, TikTok)` — 1,800 rows, CTR + ROAS + spend
 - [x] **`scripts/train_forecast_model.py`** — EDA-informed training: platform (84% importance) + budget_tier (12%) + campaign_type; R²=0.49, MAE=0.97%
@@ -100,6 +106,6 @@
 
 ## Immediate Next Steps (Priority Order)
 
-1. **AI reviewer/QA agent** — second LLM pass that critiques and quality-checks simulation output
-2. **ROAS-flip demo moment** — dramatic before/after with real numbers (now unblocked — ML layer done)
+1. **ROAS-flip demo moment** — dramatic before/after with real numbers (ML + QA layers done)
+2. **Prompt caching / token optimization** — reduce cost and latency
 3. **Deployment** — configure for demo day

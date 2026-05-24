@@ -23,6 +23,21 @@ export interface ForecastMetrics {
   conversion_trend: string
   confidence_level: 'Low' | 'Medium' | 'High'
   roi_direction: 'Negative' | 'Neutral' | 'Positive'
+  roas_range?: string
+}
+
+export interface QAFlag {
+  section: string
+  issue: string
+  severity: 'low' | 'medium' | 'high'
+}
+
+export interface QAReview {
+  verdict: 'Pass' | 'Partial Pass' | 'Needs Improvement'
+  confidence_score: number
+  flags: QAFlag[]
+  reviewer_notes: string
+  approved: boolean
 }
 
 export interface DimensionScores {
@@ -61,4 +76,5 @@ export interface SimulationResult {
   recommendations: Recommendation
   optimized_copy?: string
   optimized_forecast?: ForecastMetrics
+  qa_review?: QAReview
 }

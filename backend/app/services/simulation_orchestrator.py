@@ -3,6 +3,7 @@ from app.services.campaign_analyzer import analyze_campaign
 from app.services.persona_generator import generate_persona_reactions
 from app.services.forecast_engine import generate_forecast
 from app.services.recommendation_engine import generate_recommendations
+from app.services.qa_reviewer import run_qa_review
 
 
 async def run_simulation(campaign: CampaignInput) -> SimulationResult:
@@ -31,7 +32,7 @@ async def run_simulation(campaign: CampaignInput) -> SimulationResult:
     optimized_personas = await generate_persona_reactions(optimized_campaign)
     optimized_forecast, _ = await generate_forecast(optimized_campaign, optimized_analysis, optimized_personas)
 
-    return SimulationResult(
+    result = SimulationResult(
         campaign_analysis=analysis,
         personas=personas,
         forecast=forecast,
@@ -40,3 +41,8 @@ async def run_simulation(campaign: CampaignInput) -> SimulationResult:
         optimized_copy=optimized_copy,
         optimized_forecast=optimized_forecast,
     )
+
+    # Stage 7: QA reviewer — independent second-pass quality check
+    result.qa_review = await run_qa_review(campaign, result)
+
+    return result

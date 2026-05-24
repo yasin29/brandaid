@@ -58,6 +58,20 @@ class Recommendation(BaseModel):
     optimization_tips: list[str]
 
 
+class QAFlag(BaseModel):
+    section: str      # which part of the simulation has the issue
+    issue: str        # what's wrong
+    severity: str     # "low" | "medium" | "high"
+
+
+class QAReview(BaseModel):
+    verdict: str          # "Pass" | "Partial Pass" | "Needs Improvement"
+    confidence_score: int  # 0-100: QA agent's confidence in simulation quality
+    flags: list[QAFlag]
+    reviewer_notes: str
+    approved: bool
+
+
 class SimulationResult(BaseModel):
     campaign_analysis: CampaignAnalysis
     personas: list[PersonaReaction]
@@ -66,3 +80,4 @@ class SimulationResult(BaseModel):
     recommendations: Recommendation
     optimized_copy: Optional[str] = None
     optimized_forecast: Optional[ForecastMetrics] = None
+    qa_review: Optional[QAReview] = None
