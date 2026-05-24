@@ -1,49 +1,58 @@
 PLATFORM-SPECIFIC ADVERTISING BEST PRACTICES
-
-Source: Meta Business Help Center, Google Ads guidelines, TikTok for Business, LinkedIn Marketing Solutions, 2023–2024
+Updated: 2025 (sources: Meta Business 2025, Billo.app 2025, DeanLong.io 2025, TikTok for Business 2025, LeadsBridge 2026, Motion App 2025)
 
 ---
 
 META / FACEBOOK ADS
 
-Creative:
-- Video ads: First 3 seconds are critical — hook immediately or lose viewer
+Creative (2025 data):
+- 4:5 vertical format outperforms 1:1 square in Feed placements by up to 15%
+- Split-screen formats improve recall by up to 12% (better memory retention)
+- Static images still drive 60%–70% of conversions on Meta — don't over-index on video
+- First 3 seconds are critical for video — hook immediately or lose viewer
 - Optimal video length: 15–30 seconds for feed; under 15s for stories
-- Square (1:1) or vertical (4:5) format outperforms landscape in feed by 20%–30%
-- Text overlay: Keep under 20% of image area for full reach (Meta policy)
 - Captions: 85% of Facebook videos watched without sound — always add captions
+- 70%–80% of Meta ad performance stems from creative quality — not budget or targeting
+- Creative volume: test 15–25 genuinely different ads per campaign (mix formats, copy lengths, angles)
+- Interviews and drama hooks outperform playful formats for conversion objectives
+- Text overlay: Keep under 20% of image area for full delivery
 
 Targeting:
 - Lookalike audiences (1%–2% similarity): Most cost-efficient for scaling
-- Detailed interest targeting: Works well for top-of-funnel awareness
-- Retargeting website visitors: Typically 2x–5x better ROAS than cold audiences
+- Detailed interest targeting: Good for top-of-funnel awareness
+- Retargeting website visitors: Typically 2×–5× better ROAS than cold audiences
 - Avoid over-narrowing: Keep audience above 500k for algorithm to optimize
+- Advantage+ Audiences (Meta's AI targeting): Outperforming manual targeting in most cases in 2025
 
 Copy:
-- Optimal headline: 5 words or fewer
-- Body text: First line must hook without "See More" expansion needed
+- Optimal headline: 5 words or fewer (under 125 characters total copy)
+- Body text: First line must hook without "See More" expansion
+- Test one-sentence copy against blog-post-length; medium-length (3–4 sentences) often performs worst
+- Sell benefits, not features; focus on the transformation, not the product
 - Strong CTA: "Shop Now" and "Learn More" consistently outperform generic CTAs
-- Emojis: Can increase engagement by 25%–40% with right audience
 
 Budget:
-- Learning phase: Min $5/day for 7 days to exit learning phase
-- Campaign budget optimization (CBO): Recommended for 3+ ad sets
-- Spend at least $10–$20 per day per ad set for meaningful data
+- Learning phase: Min $5/day × 7 days (or 50 conversions in 7 days) to exit
+- Campaign Budget Optimization (CBO): Recommended for 3+ ad sets
+- Spend at least $10–$20/day per ad set for meaningful data
 
 ---
 
 INSTAGRAM ADS
 
 Creative:
-- Reels: Highest reach potential in 2024 — prioritized by algorithm
-- Stories: Swipe-up/link sticker for direct conversion; keep under 15s
+- Reels: Highest reach potential in 2025 — algorithm-prioritized; 1.2% avg CTR for video
+- Stories: Swipe-up / link sticker for direct conversion; keep under 15s; CTR 0.33%–0.54%
 - Feed: High-quality visuals essential — lower tolerance for lo-fi than TikTok
-- Carousels: Higher engagement (+3x) for consideration-stage campaigns
+- Carousels: Higher engagement (+3×) for consideration-stage campaigns; good for multi-product
+- Feed video avg CTR ~1.2% (Retail and Legal strongest sectors)
+- Influencer-style creative outperforms traditional studio ads 2×–3×
+- UGC-style: 4× higher CTR than polished studio content
 
 Audience:
-- Ages 18–34 most active and most responsive
-- Influencer-style creative outperforms traditional ads by 2x–3x
-- UGC (user-generated content) style: 4x higher CTR than polished studio content
+- Ages 18–34 most active and most purchase-intent responsive
+- 60% of consumers discover products through Instagram, YouTube, and TikTok combined
+- Strong for fashion, beauty, lifestyle, food, fitness — weaker for B2B
 
 ---
 
@@ -51,59 +60,68 @@ GOOGLE SEARCH ADS
 
 Structure:
 - 3–5 headlines, 2 descriptions per ad for Responsive Search Ads (RSA)
-- Include primary keyword in headline 1
-- Use Ad Extensions: Sitelinks, callouts, structured snippets increase CTR 10%–20%
-- Headline 3: Use for promotions or CTAs
+- Include primary keyword in Headline 1
+- Ad extensions (Sitelinks, Callouts, Structured Snippets): Increase CTR 10%–20%
+- Headline 3: Use for promotions or urgency CTAs
 
 Targeting:
-- Exact match: Highest intent, lowest volume
+- Exact match: Highest intent, lowest volume — best for conversion campaigns
 - Phrase match: Best balance of intent and volume
-- Broad match: Requires Smart Bidding to be effective; risky without it
-- Negative keywords: Critical — add from day 1 to avoid irrelevant spend
+- Broad match: Only effective with Smart Bidding; risky without conversion data
+- Negative keywords: Critical — add from day 1 to eliminate irrelevant spend
 
 Bidding:
-- Target CPA or Target ROAS bidding: Effective after 30+ conversions in 30 days
-- Manual CPC: Better for low-volume or new campaigns without conversion data
-- Enhanced CPC: Good middle ground
+- Target CPA or Target ROAS: Effective after 30+ conversions in 30 days
+- Manual CPC: Better for new campaigns without conversion history
+- 2025 performance: Search ROAS 5.17× avg (still highest of any platform)
 
 ---
 
 TIKTOK ADS
 
-Creative:
-- "Don't make ads, make TikToks" — native content style dramatically outperforms
-- First 2–3 seconds: Must grab attention or video is swiped
-- Trending sounds/music: 3x higher engagement rate
+Creative (2025 key rules):
+- "Don't make ads, make TikToks" — native content style drives 3.3× more action than repurposed ads
+- 74% of viewers say TikTok-first ads capture their attention vs repurposed content
+- First 2–3 seconds: Must grab attention or swipe happens immediately
 - Duration: 9–15 seconds optimal; 30s max for most objectives
-- Text on screen: Keep captions and hooks visible for 3+ seconds
-- Subtitles: Required for accessibility and sound-off viewers
+- Sound-on by default: Use trending audio; 74%+ of TikTok views have sound on
+- Text overlays, voiceovers, green screen, duets, stitches: Use native features to feel organic
+- Subtitles: Include for accessibility and the minority who watch muted
+- Creative fatigue: TikTok ads burn out within 1–2 weeks — refresh creative constantly
+
+Performance data:
+- Avg CTR: 0.61%–0.84% (2025)
+- Avg CVR: 2.01%; avg CPA: $32.74; avg CPM: $13.26
+- TikTok generates more net-new customers than Meta (10% new-to-brand rate vs Meta's 38%)
+- B2C products perform strongly; B2B effectiveness very limited on TikTok
 
 Audience:
-- Gen Z (16–24): Dominant, highest engagement
-- Millennials (25–34): Fast-growing segment
-- B2C products perform strongly; B2B is limited
-- Interest targeting less refined than Meta — creator/hashtag targeting preferred
+- Gen Z (16–24): Dominant, highest engagement; 72% of Gen Z use TikTok
+- Millennials (25–34): Fast-growing segment on platform
+- Interest targeting less refined than Meta — creator, hashtag, and behavioral targeting preferred
 
 ---
 
 LINKEDIN ADS
 
 Creative:
-- Thought leadership content: Highest engagement for B2B
-- Single-image ads: Simple, professional — avoid busy designs
-- Video: 15–30 seconds for brand awareness; lead gen performs better as image
+- Thought leadership content: Highest engagement for B2B decision-makers
+- Single-image ads: Simple, professional design — avoid busy or consumer-style creative
+- Video: 15–30 seconds for brand awareness; lead gen performs better as image + form
 - Document ads: Very high engagement for whitepapers and reports
+- Lead Gen Forms (native): 10%–13% conversion rate — significantly outperform external landing pages
 
 Targeting:
-- Job title targeting: Most precise but most expensive
+- Job title: Most precise but most expensive
 - Job function + seniority: Better volume with reasonable precision
 - Company size + industry: Strong for ABM (account-based marketing)
-- Avoid stacking too many layers — keep audience above 50k
+- Avoid stacking too many targeting layers — keep audience above 50k
 
 Expectations:
-- LinkedIn CPC is 5x–10x higher than Facebook — budget accordingly
-- Justified by higher intent for B2B and professional audiences
+- LinkedIn CPC: 5×–10× higher than Facebook — budget accordingly
+- Justified by professional audience quality and B2B LTV
 - Best for top-of-funnel awareness and mid-funnel lead generation in B2B
+- 92% of B2B marketers say case studies are most persuasive format — use in LinkedIn creative
 
 ---
 
@@ -112,22 +130,26 @@ YOUTUBE ADS
 Creative:
 - Skippable in-stream: First 5 seconds must hook — these are non-skippable
 - Non-skippable (15s): Every second must earn viewer attention
-- Optimal storytelling arc: Problem → Solution → CTA (even in 15–30s)
+- Optimal arc (even in 15–30s): Problem → Solution → CTA
 - Add captions — 60% of views on mobile, often without sound
 
 Targeting:
-- Custom intent audiences (based on Google Search behavior): High purchase intent
+- Custom intent audiences (based on Google Search behavior): Highest purchase intent on YouTube
 - YouTube channel targeting: Place ads alongside competitor or complementary content
 - Affinity audiences: Better for awareness than conversion
+- Avg CTR: 0.65% (stable 2025–2026)
 
 ---
 
-GENERAL BEST PRACTICES ACROSS ALL PLATFORMS
+GENERAL BEST PRACTICES ACROSS ALL PLATFORMS (2025)
 
-1. Test creative early: Run 3–5 variants in first week, pause underperformers
-2. Refresh creative every 3–4 weeks to combat ad fatigue
-3. Align creative with funnel stage: Awareness ≠ Conversion creative
-4. Mobile-first design: 70%–80% of social ad consumption is on mobile
-5. Landing page alignment: Ad message must match landing page — mismatch kills conversion
-6. Campaign objectives: Always match objective to business goal; clicks ≠ conversions
-7. Frequency cap: Keep frequency under 3–4x/week to avoid negative brand sentiment
+1. Creative is the primary lever: 56%–80% of performance variation is driven by creative quality
+2. Test 3–5 creative variants in the first week; pause underperformers at 48–72 hours
+3. Refresh creative every 2–3 weeks (TikTok); 3–4 weeks (Meta/Instagram); 4–6 weeks (YouTube/LinkedIn)
+4. UGC-style consistently outperforms polished studio content 3–5× across ROAS, CVR, CPM
+5. Mobile-first: 70%–80% of social ad consumption is on mobile — design for small screens first
+6. Landing page alignment: Ad message must match landing page — mismatch kills conversion rate
+7. Funnel stage alignment: Awareness creative ≠ Conversion creative; mismatching kills efficiency
+8. Frequency cap: Keep under 3–4×/week per user to avoid negative brand sentiment
+9. Sound strategy: Facebook/Instagram = assume muted; TikTok/YouTube = assume sound-on
+10. AI targeting: Meta's Advantage+ and Google's Performance Max increasingly outperform manual in 2025

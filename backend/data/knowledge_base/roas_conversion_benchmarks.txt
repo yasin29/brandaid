@@ -1,51 +1,66 @@
 ROAS AND CONVERSION RATE BENCHMARKS — DIGITAL ADVERTISING
+Updated: 2025 (sources: WordStream 2025, Triple Whale 2025, First Page Sage 2025, Lebesgue 2026, Trendtrack 2025)
 
-Source: Industry aggregated benchmarks (Nielsen, WordStream, HubSpot, Shopify, Google, Meta 2023–2024)
+---
+
+RETURN ON AD SPEND (ROAS) — BY PLATFORM (2025)
+
+ROAS = Revenue generated / Ad spend. A ROAS of 4× means $4 earned per $1 spent.
+
+Platform benchmarks (2025 medians):
+- Google Search: 5.17× (highest — driven by high-intent search behavior; declined ~10% YoY to 3.68× overall)
+- Google Shopping: 4.0×–8.0×
+- Meta/Facebook: 2.19× avg across all industries (Facebook avg 2025)
+- Instagram: 2.5×–5.0×
+- TikTok: 2.21× (growing but weaker conversion tracking than Meta)
+- LinkedIn: 1.5×–3.0× (high CPC offset by B2B LTV)
+- YouTube: 3.0×–6.0× (view-through attribution critical)
+
+Key 2025 ROAS trends:
+- Average eCommerce ROAS dropped to 2.87× in 2025 (from ~3.2× in 2024) — industry-wide efficiency decline
+- Median brand ROAS across all channels in 2024: 2.04×
+- ROAS declined across 13 of 14 industries in 2025 on Google (rising CPCs, more competition)
+- TikTok: lower CPM but weaker ROAS vs Meta; better for net-new customer acquisition (10% new-to-brand delta vs Meta's 38%)
 
 ---
 
 RETURN ON AD SPEND (ROAS) — BY INDUSTRY
 
-ROAS = Revenue generated / Ad spend
-A ROAS of 4x means $4 earned for every $1 spent.
+Minimum viable ROAS (break-even at 25% margin): 4×
+Good ROAS: 4×–6×
+Strong ROAS: 6×–10×
+Exceptional: 10×+
 
-Minimum viable ROAS (break-even, assuming 25% margin): 4x
-Strong ROAS: 6x–10x
-Exceptional ROAS: 10x+
-
-By Industry:
-- E-commerce / Retail: 4x–8x average, 10x+ top performers
-- Fashion / Apparel: 3x–6x
-- Health & Wellness: 5x–9x
-- Software / SaaS: 3x–5x (higher LTV offsets lower ROAS)
-- Finance / Insurance: 2x–4x (high CPA but high LTV)
-- Food & Beverage: 4x–7x
-- Education: 3x–6x
-- Travel: 4x–8x (highly seasonal)
-- Beauty / Cosmetics: 5x–10x
-- B2B Services: 2x–4x (long sales cycle)
-
-By Platform:
-- Google Search: 5x–10x (high intent)
-- Google Shopping: 4x–8x
-- Meta/Facebook: 3x–6x
-- Instagram: 3x–7x
-- TikTok: 2x–5x (brand awareness heavy)
-- LinkedIn: 1.5x–3x (high CPC, but B2B LTV)
-- YouTube: 3x–6x (view-through attribution)
+By Industry (realistic 2025 ranges):
+- E-commerce / Retail: 2.87×–6.0× (median 2.87×; top performers 8×–12×)
+- Fashion / Apparel: 3.0×–6.0×
+- Health & Wellness / Beauty: 4.0×–8.0× (strong UGC-driven performance)
+- Beauty / Cosmetics: 4.0×–10.0×
+- Software / SaaS: 2.0×–5.0× (lower ROAS acceptable due to high LTV)
+- Finance / Insurance: 2.0×–4.0× (high CPA, justified by LTV)
+- Food & Beverage: 3.0×–6.0×
+- Education: 2.5×–5.0×
+- Travel: 3.0×–7.0× (highly seasonal; ROAS swings dramatically by quarter)
+- B2B Services: 1.5×–3.5× (long sales cycle; attribute to pipeline, not direct ROAS)
+- Real Estate: 2.0×–5.0×
 
 ---
 
-CONVERSION RATES — BY INDUSTRY AND FUNNEL STAGE
+CONVERSION RATES — BY INDUSTRY AND FUNNEL STAGE (2025)
 
-Landing page conversion rates (visit → lead):
+Ad click-to-conversion rates (2025):
+- TikTok avg: 2.01% (up from 1.92% in 2024)
+- Google Search avg: 3.5%–6% (high-intent; varies by industry)
+- Meta avg: 1.5%–3% (depends heavily on funnel stage)
+
+Landing page conversion rates (click → lead/purchase):
 - E-commerce: 2.5%–4%
 - SaaS / Software: 3%–7%
 - Finance: 5%–11%
 - Healthcare: 3%–6%
 - Legal: 6%–12%
-- Real Estate: 2%–4%
-- Travel: 2%–4%
+- Real Estate: 5.45% (2025 cold traffic) — higher than expected due to intent
+- Travel: 1.04% (2025 cold traffic) — lower due to high consideration cycle
 
 E-commerce checkout conversion (add to cart → purchase):
 - Average: 2.5%–3.5%
@@ -54,33 +69,38 @@ E-commerce checkout conversion (add to cart → purchase):
 
 Lead-to-customer conversion (B2B):
 - Average: 2%–5%
-- With strong nurture: 10%–15%
+- With strong nurture sequences: 10%–15%
 
 ---
 
-COST PER ACQUISITION (CPA) — BY PLATFORM
+COST PER ACQUISITION (CPA) — BY PLATFORM (2025)
 
-Google Search Ads average CPA (all industries): $48
-Meta/Facebook average CPA: $18
-Instagram average CPA: $22
-LinkedIn average CPA: $98 (B2B, high LTV justified)
-TikTok average CPA: $14–$25
-YouTube average CPA: $38
+TikTok avg CPA: $32.74 (CPM: $13.26; approaching Meta parity)
+Meta/Facebook avg CPA: $18–$25 (CPM: $14.19 median)
+Google Search avg CPA: $40–$65 (varies by industry)
+Instagram avg CPA: $22–$35
+LinkedIn avg CPA: $75–$130 (B2B; high LTV justified)
+YouTube avg CPA: $30–$50
+
+TikTok CPC benchmark (2025): Good CPC < $0.25 for efficient industries; range $0.05–$1.00
 
 ---
 
 BUDGET EFFICIENCY SIGNALS
 
-Low budget (<$500/month): Insufficient data collection, high CPA, use narrow targeting
-Mid budget ($500–$5,000/month): Can test 2–3 audiences, some optimization possible
-High budget ($5,000–$50,000/month): A/B testing, lookalike audiences, full funnel strategy
+Low budget (<$500/month): High CPA, insufficient conversion data; narrow targeting essential
+Mid budget ($500–$5,000/month): Can test 2–3 audiences; some optimization possible
+High budget ($5,000–$50,000/month): Full A/B testing, lookalike audiences, full funnel strategy
 Enterprise ($50k+/month): Algorithmic optimization, cross-platform attribution, custom audiences
+
+Meta learning phase minimum: $5/day × 7 days to exit (or 50 conversions in 7 days)
 
 ---
 
 CAMPAIGN OBJECTIVE IMPACT ON METRICS
 
-Awareness campaigns: Optimize for impressions, reach, CPM — not CTR or ROAS
-Consideration campaigns: Optimize for CTR, CPC, video views
-Conversion campaigns: Optimize for ROAS, CPA, conversion rate
-Retargeting campaigns: Typically 2x–5x better ROAS than prospecting
+Awareness: Optimize for impressions, reach, CPM — CTR and ROAS less relevant
+Consideration: Optimize for CTR, CPC, video views, engagement rate
+Conversion: Optimize for ROAS, CPA, conversion rate
+Retargeting: Typically 2×–5× better ROAS than cold prospecting
+Retargeting + UGC creative: Top-performing combination in 2024–2025 DTC data
