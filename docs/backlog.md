@@ -17,18 +17,21 @@ These are required for the demo to work and impress judges.
 - [x] **Backend: DimensionScores** — numeric 0–10 sub-scores added to `CampaignAnalysis`; campaign analyzer prompt updated
 - [x] **ResultsPage V2** — Chart.js radar, count-up score, curtain reveal, "What's Working / Watch out" split, ranked rec cards, SVG sparklines, dramatic before/after
 - [x] **InputPage V2** — visual platform tiles (7 platforms, color-coded), budget slider + presets, animated dropzone
-- [ ] **RAG integration** — seed `backend/data/knowledge_base/` with marketing benchmark docs; implement `rag_service.py`; inject context into forecast + recommendation prompts
+- [x] **RAG integration** — `backend/data/knowledge_base/` seeded; `rag_service.py` implemented; context injected into forecast + recommendation prompts
+- [x] **RAG enrichment** — all 5 knowledge base docs updated with sourced 2024-2025 benchmark data; ChromaDB reset for clean re-index
+- [x] **ML forecast layer** — Random Forest on Kaggle ad data (R²=0.49); `ml_forecast_service.py`; ML CTR + ROAS ranges injected into forecast prompt as hard constraints
+- [x] **Dynamic persona generation** — `audience_researcher.py` uses OpenAI Responses API web_search_preview; personas grounded in real 2024-2025 audience data; static templates replaced
+- [x] **QA reviewer agent (Stage 7)** — independent LLM second-pass with 7 quality criteria; `QAReviewPanel` on ResultsPage
+- [x] **Calculator tool in QA** — OpenAI function calling (`verify_campaign_math`); two-pass flow; catches ROAS vs ROI direction contradictions
+- [x] **Prompt caching + token optimization** — stable system prompts, `asyncio.gather()` parallelization, trimmed token budgets
+- [ ] **Deployment** — host backend + serve frontend for demo day; update `VITE_API_URL`
 
 ---
 
 ## Tier 2 — Should Have (Strengthens Demo)
 
-These make the demo more compelling and the product more believable.
-
-- [ ] **ML forecast layer** — train lightweight sklearn Random Forest on Kaggle social media advertising dataset; add numeric `predicted_ctr`, `predicted_roas`, `predicted_conversions` fields to `ForecastMetrics`; enables ROAS-flip demo moment with real numbers. Target datasets: "Social Media Advertising Dataset", "Facebook Ad Campaign Performance". Architecture: `backend/app/services/ml_forecast_service.py` + `backend/data/models/` for joblib files.
-- [ ] **ROAS-flip demo moment** — dramatic before/after with animated numbers (requires ML layer for real numeric values)
-- [ ] **Dynamic persona generation** — generate persona profiles dynamically from campaign target audience instead of static templates
-- [ ] **Error handling UI** — proper error states on InputPage if simulation fails (not just a toast)
+- [ ] **ROAS-flip demo moment** — animated before/after number transitions (ML + QA layers in place; needs frontend polish)
+- [ ] **Error handling UI** — proper error states on InputPage if simulation fails (not just a silent hang)
 - [ ] **Loading skeleton** on ResultsPage while waiting
 
 ---
@@ -36,12 +39,10 @@ These make the demo more compelling and the product more believable.
 ## Tier 3 — Nice to Have (Polish)
 
 - [ ] **Responsive design** — make all three screens usable on tablet/mobile
-- [ ] **Campaign copy character counter** — show remaining characters in textarea
-- [ ] **Platform-specific benchmarks** — adjust forecast language based on platform (Instagram CTR vs LinkedIn CTR ranges differ)
 - [ ] **Share/export results** — copy results to clipboard or download as PDF
 - [ ] **Retry on OpenAI errors** — exponential backoff for rate limit / timeout errors
 - [ ] **Image cleanup job** — delete uploaded images older than N hours from `backend/uploads/`
-- [ ] **VITE_API_URL env var** — replace hardcoded `localhost:8000` in `lib/api.ts` with `import.meta.env.VITE_API_URL` for deployment flexibility
+- [ ] **VITE_API_URL env var** — replace hardcoded `localhost:8000` in `lib/api.ts` (also needed for deployment)
 
 ---
 
@@ -68,7 +69,8 @@ Do not build these during the competition sprint.
 | 2 | Node 18 (system default) incompatible with Vite 9 — must use Node 22 via nvm | Medium | Documented in workflows.md |
 | 3 | `baseUrl` in tsconfig deprecated in TS6 — removed, using `paths` alone with `moduleResolution: bundler` | Low | Fixed |
 | 4 | Image uploads accumulate in `backend/uploads/` with no cleanup | Low | Open |
-| 5 | `max_tokens` not supported by newer OpenAI models — replaced with `max_completion_tokens` in all 4 service files | Medium | Fixed |
+| 5 | `max_tokens` not supported by newer OpenAI models — replaced with `max_completion_tokens` in all service files | Medium | Fixed |
+| 6 | ChromaDB re-indexes from scratch on every server start if `chroma_db/` is empty — acceptable for demo; takes ~5s | Low | By design |
 
 ---
 
@@ -79,5 +81,5 @@ Items we may adapt if time permits. Full context in `docs/design_reference.md`.
 - [ ] Multi-step campaign brief wizard (8-stage conversational flow with live brief side panel)
 - [ ] Market context signals panel (seasonal events, competitor spend signals)
 - [ ] Per-channel breakdown table (ROAS/CTR/orders per platform — needs ML layer)
-- [ ] Sticky bottom action bar on ResultsPage ("Export PDF / Get Launch Plan")
+- [x] Sticky bottom action bar on ResultsPage ("Export PDF / Get Launch Plan") — implemented in V2
 - [ ] Confetti burst on before/after reveal

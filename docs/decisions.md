@@ -86,3 +86,36 @@ A record of key decisions made during development, with rationale. Read this bef
 
 ### Decision: Node 22 required (not Node 18)
 **Why:** Vite 9+ requires Node >= 20.19.0 or >= 22.12.0. Node 18 (the system default on the dev machine) fails. Use `nvm use 22.14.0` or ensure Node 22 is the default.
+
+---
+
+## AI Pipeline Architecture (added 2026-05-25)
+
+### Decision: Parallelize stages with `asyncio.gather()` rather than sequential awaits
+**Why:** Several pipeline stages are data-independent and can run concurrently. Audience research (web search) + Stage 1 (campaign analysis) run in parallel, hiding the web search latency entirely. Stage 4 (forecast) + Stage 5 (recommendations) also run in parallel. Re-sim Stage 6a (analysis) + 6b (persona) run in parallel. Total wall time reduced by ~40% vs sequential execution.
+**How to apply:** Any two `async` service calls that don't depend on each other's output can be wrapped in `asyncio.gather()`. Check the orchestrator for the current dependency graph before adding new stages.
+
+### Decision: Dynamic persona generation via OpenAI Responses API web_search_preview (replaces static templates)
+**Why:** Static Alex/Morgan/Casey personas produced generic, unconvincing simulations. Real audience data (platform demographics, behavioral signals) makes the 3 personas credible and campaign-specific. The OpenAI Responses API has a built-in `web_search_preview` tool that lets the model autonomously decide what to search — no manual query construction needed.
+**Architecture:** `audience_researcher.py` uses `client.responses.create(tools=[{"type": "web_search_preview"}])`. Returns a 300-500 word research brief fed to `persona_generator.py` as additional context. Graceful fallback to static archetype hints if the search fails (network error, API unavailability).
+**How to apply:** The Responses API (`client.responses.create`) is distinct from Chat Completions (`client.chat.completions.create`) — different parameter names (`input` not `messages`, no `response_format`). Do not mix them.
+
+### Decision: QA reviewer as a two-pass tool calling flow, not a single prompt
+**Why:** OpenAI's `response_format={"type": "json_object"}` cannot be combined with `tools` in the same API call (the model won't call tools if forced into JSON output mode). Two-pass solution: Pass 1 uses `tool_choice="auto"` with no response_format so the model can call `verify_campaign_math`; Pass 2 appends tool results to the conversation and forces JSON output for the final review.
+**Architecture:** `qa_reviewer.py` builds a message list, makes Pass 1 call, appends any tool call results as `role: "tool"` messages with matching `tool_call_id`, then makes Pass 2 call with `response_format={"type": "json_object"}`.
+**How to apply:** Always append the assistant message from Pass 1 to the conversation before Pass 2 — the API requires the assistant's tool_call message to precede the tool result message.
+
+### Decision: `verify_campaign_math` is pure Python, not an external API call
+**Why:** The calculator tool only does arithmetic (ROAS × budget → revenue range, implied ROI direction from avg ROAS). There is no reason to make a network call for deterministic math. The OpenAI tool calling schema declares the function, but `_run_calculator(args)` runs locally. This keeps the QA stage fast and free of additional API dependencies.
+
+### Decision: ML forecast uses a hybrid approach — ML for numbers, LLM for narrative
+**Why:** The LLM cannot reliably produce calibrated numeric CTR/ROAS values (it hallucinates plausible-sounding but wrong numbers). The sklearn model (trained on real Kaggle ad data) produces defensible quantitative predictions. But the LLM is better at contextual reasoning and natural language explanation. Injecting ML numbers as hard constraints the LLM "must use verbatim" combines both strengths.
+**Architecture:** `ml_forecast_service.py` runs first, `forecast_engine.py` embeds the ML-computed CTR range and ROAS band into the system prompt as constraints. LLM elaborates on engagement estimate, conversion trend, confidence level, and risk language.
+**Risk to watch:** If ML numbers are unrealistic for a given campaign (e.g., a miscategorized platform), the LLM will reproduce bad numbers. The QA reviewer's `verify_campaign_math` tool provides a downstream sanity check.
+
+### Decision: ROAS model uses precomputed percentile bands, not a regression model
+**Why:** Attempted to train a ROAS regression model but R²≈0 — ROAS variance in the Kaggle dataset is driven by factors not captured in the features (industry, LTV, offer quality). Rather than shipping a useless model, we precomputed per-platform Q10/Q25/Q50/Q75/Q90 bands from the dataset. Campaign score (0-100 from analyzer) selects the percentile band. This is honest and more reliable than a random model.
+
+### Decision: RAG knowledge base committed to git; ChromaDB reset when docs are enriched
+**Why:** Multi-device development requires the knowledge base content to be in git. ChromaDB's local SQLite store is also committed so the vector index survives git pulls. When knowledge base docs are updated, the old ChromaDB is deleted and the `chroma_db/` directory is reset to just a `.gitkeep` — the server re-indexes from scratch on next startup (takes ~5 seconds, acceptable for demo scope).
+**How to apply:** After updating any `.txt` file in `data/knowledge_base/`, delete `data/chroma_db/` contents (keep `.gitkeep`), commit, and restart the server. The lifespan handler calls `initialize_rag()` which detects the empty collection and re-indexes all documents.

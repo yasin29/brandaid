@@ -2,7 +2,7 @@
 
 **Last updated:** 2026-05-25
 **Branch:** main
-**Last commit:** `ff73c78` — Redesign UI to match team mock-up: light/dark hybrid, indigo + emerald theme
+**Last commit:** `cfa7400` — Enrich RAG knowledge base with 2024-2025 benchmark data; reset ChromaDB
 
 ---
 
@@ -19,98 +19,96 @@
 - [x] FastAPI app scaffolded (`backend/main.py`)
 - [x] CORS configured for `http://localhost:5173`
 - [x] Python 3.12 venv created at `backend/.venv/`
-- [x] All dependencies installed (FastAPI, OpenAI 2.38.0, ChromaDB, pydantic-settings, aiofiles, etc.)
+- [x] All dependencies installed (FastAPI, OpenAI 2.38.0, ChromaDB, pydantic-settings, aiofiles, sklearn, joblib, pandas, etc.)
 - [x] Pydantic schemas for all data shapes (`app/models/schemas.py`)
 - [x] Config via `pydantic-settings` reading from `.env` (`app/core/config.py`)
 - [x] `AsyncOpenAI` client initialized (`app/services/openai_client.py`)
-- [x] All 6 AI pipeline stages implemented
-- [x] Simulation orchestrator wiring all stages
+- [x] All 7 AI pipeline stages implemented (Stages 1–6 + QA Stage 7)
+- [x] Simulation orchestrator wiring all stages with `asyncio.gather()` parallelization
 - [x] `/api/simulate/` POST endpoint (multipart form with optional image upload)
 - [x] `/health` GET endpoint
 - [x] `max_tokens` → `max_completion_tokens` fix (was causing 400 errors)
+- [x] `DimensionScores` numeric sub-scores in `CampaignAnalysis` (radar chart data)
 
 ### Frontend
 - [x] Vite + React 18 + TypeScript scaffolded (Node 22)
-- [x] TailwindCSS v4 + shadcn/ui installed and configured (dark theme)
+- [x] TailwindCSS v4 + shadcn/ui installed and configured
 - [x] shadcn components: button, card, input, label, progress, textarea, badge, select, separator
 - [x] Path alias `@/` → `src/` configured
-- [x] TypeScript types defined (`src/types/index.ts`)
+- [x] TypeScript types defined (`src/types/index.ts`) — includes QAReview, QAFlag, roas_range
 - [x] API client (`src/lib/api.ts`)
 - [x] Screen state machine in `App.tsx` (input → processing → results)
-- [x] **InputPage V1**: shadcn components, platform Select, image preview, char counter, violet glow button
-- [x] **ProcessingPage V1**: pulsing violet orb, animated stage list, live progress bar
-- [x] **ResultsPage V1**: score display, persona cards with level badges, forecast tiles, risk list, before/after comparison
+- [x] **InputPage V2**: Visual platform tiles (7 platforms, color-coded), budget slider + presets, animated drag-and-drop zone
+- [x] **ProcessingPage**: indigo orb, pipeline step list, live progress bar
+- [x] **ResultsPage V2**: dark hero with 4 metric cards + confidence breakdown; light 2-col body; Chart.js radar; ranked rec cards; SVG sparklines; dramatic before/after; QAReviewPanel; sticky bottom action bar
+- [x] Full UI redesign: light/dark hybrid, indigo (#4338CA) + emerald (#059669) design system
 
 ### Integration
 - [x] End-to-end smoke test passed — full pipeline confirmed working
 - [x] CORS confirmed working across ports (frontend → backend)
 
----
-
-## Completed This Session (2026-05-25)
-
-- [x] **Backend**: Added `DimensionScores` model (numeric 0–10 per dimension) to `CampaignAnalysis` schema
-- [x] **Backend**: Updated `campaign_analyzer.py` prompt to return sub-scores alongside text
-- [x] **Frontend**: Installed Chart.js + updated TypeScript types for `DimensionScores`
-- [x] **ResultsPage V2**: Chart.js radar, count-up score animation, curtain reveal, "What's Working / Watch out" split, ranked rec cards, SVG sparklines, dramatic before/after side-by-side
-- [x] **InputPage V2**: Visual platform tiles (7 platforms, color-coded), budget slider + presets, animated drag-and-drop zone
-- [x] **Full UI redesign** — adopted team mock-up design system: light/dark hybrid, indigo (#4338CA) + emerald (#059669)
-  - App.tsx: removed dark wrapper, added `campaignSummary` (objective + platform) threaded to ResultsPage
-  - InputPage: light (#FAFAFE) background, white card form, native HTML inputs, indigo focus rings + channel tiles, large `$X,XXX` budget display
-  - ProcessingPage: indigo orb, pipeline step list matching team's loading overlay
-  - ResultsPage: dark hero with 4 metric cards + confidence breakdown bars; light 2-col body; emerald radar; sticky bottom action bar ("Rerun" + "Get Launch Plan")
-
-### Agentic Web Search — Audience Research (2026-05-25)
-- [x] **`audience_researcher.py`** — uses OpenAI Responses API (`client.responses.create`) with built-in `web_search_preview` tool; model autonomously searches for current platform demographics, target audience behavior, and campaign format data; returns 300-500 word research brief grounded in real 2024-2025 sources
-- [x] **`persona_generator.py`** — now accepts `audience_research` string; generates 3 dynamic, campaign-specific personas instead of static Alex/Morgan/Casey templates; system prompt variant activates when research is available
-- [x] **Orchestrator** — audience research runs in parallel with Stage 1 (campaign analysis) via `asyncio.gather()` — web search latency is hidden; research also passed to re-simulation persona generation (same audience, no repeat search)
-
-### QA Reviewer Agent (2026-05-25)
-- [x] **`QAReview` + `QAFlag` schemas** — added to `schemas.py` and frontend `types/index.ts`
-- [x] **`qa_reviewer.py`** — Stage 7 of the pipeline; independent LLM pass reviewing full simulation output against 6 concrete criteria: forecast-persona consistency, risk specificity, recommendation-weakness alignment, persona differentiation, optimized copy quality, narrative coherence
-- [x] **`simulation_orchestrator.py`** — wired as Stage 7 after re-simulation completes
-- [x] **`ResultsPage.tsx`** — `QAReviewPanel` component: verdict badge (Pass/Partial Pass/Needs Improvement), confidence score + bar, reviewer notes, expandable flags list with severity tags; renders between hero and body
-
-### ML Forecast Layer (2026-05-25)
-- [x] **Kaggle dataset** — `Global Ads Performance (Google, Meta, TikTok)` — 1,800 rows, CTR + ROAS + spend
-- [x] **`scripts/train_forecast_model.py`** — EDA-informed training: platform (84% importance) + budget_tier (12%) + campaign_type; R²=0.49, MAE=0.97%
-- [x] **`data/models/`** — `ctr_model.joblib`, `encoders.joblib`, `dist_stats.json` (per-platform Q25/Q50/Q75 bands for ROAS)
-- [x] **`ml_forecast_service.py`** — lazy-loads model, maps app platform/objective/budget → dataset categories, applies campaign_score to percentile band selection
-- [x] **`forecast_engine.py`** — ML numbers injected into prompt as hard constraints; LLM narrates around ML-computed CTR and ROAS ranges
-- [x] **`ForecastMetrics` schema** — added optional `roas_range` field
-
-### RAG Integration (2026-05-25)
-- [x] **Knowledge base** — 5 documents seeded in `backend/data/knowledge_base/`:
-  - `platform_ctr_benchmarks.txt` — CTR by platform (Google, Meta, Instagram, LinkedIn, TikTok, YouTube, Twitter)
-  - `roas_conversion_benchmarks.txt` — ROAS by industry/platform, conversion rates, CPA, budget efficiency
+### RAG Layer
+- [x] 5 knowledge base documents seeded in `backend/data/knowledge_base/`:
+  - `platform_ctr_benchmarks.txt` — CTR by platform (2024-2025 sourced)
+  - `roas_conversion_benchmarks.txt` — ROAS by industry/platform, conversion rates, CPA
   - `audience_psychology.txt` — Gen Z/Millennial/GenX/Boomer profiles, emotional triggers, trust signals
   - `platform_best_practices.txt` — Creative and targeting best practices per platform
   - `campaign_creative_guidelines.txt` — Copy effectiveness, visual signals, emotional tone, trust integration
-- [x] **`rag_service.py`** — ChromaDB PersistentClient, auto-indexes on startup, cosine similarity retrieval, 500-word overlapping chunks, skips already-indexed docs
-- [x] **FastAPI lifespan** — `initialize_rag()` called on server startup via `@asynccontextmanager lifespan`
-- [x] **`forecast_engine.py`** — RAG retrieves CTR/ROAS benchmarks and injects into forecast prompt
-- [x] **`recommendation_engine.py`** — RAG retrieves platform best practices and injects into recommendation prompt
+- [x] **RAG enrichment** — all 5 docs updated with sourced 2024-2025 data (WordStream, Triple Whale, First Page Sage, Britopian, TikTok for Business, Motion App, Sprout Social)
+- [x] `rag_service.py` — ChromaDB PersistentClient, auto-indexes on startup, cosine similarity retrieval
+- [x] FastAPI lifespan — `initialize_rag()` called on server startup
+- [x] `forecast_engine.py` — RAG retrieves CTR/ROAS benchmarks, injected into prompt
+- [x] `recommendation_engine.py` — RAG retrieves platform best practices, injected into prompt
+- [x] ChromaDB reset — old index cleared; server will re-index fresh on next startup
+
+### ML Forecast Layer
+- [x] Kaggle dataset: `Global Ads Performance (Google, Meta, TikTok)` — 1,800 rows
+- [x] `scripts/train_forecast_model.py` — Random Forest: platform (84% importance) + budget_tier + campaign_type; R²=0.49, MAE=0.97%
+- [x] `data/models/` — `ctr_model.joblib`, `encoders.joblib`, `dist_stats.json` (per-platform ROAS percentile bands)
+- [x] `ml_forecast_service.py` — lazy-loads model, maps platform/objective/budget → ML prediction; `campaign_score` selects percentile band
+- [x] `forecast_engine.py` — ML CTR and ROAS ranges injected into LLM prompt as hard constraints
+
+### Agentic AI (Tool Calling + Web Search)
+- [x] **`audience_researcher.py`** — OpenAI Responses API with built-in `web_search_preview` tool; searches current platform demographics and audience behavior; feeds persona generation
+- [x] **`persona_generator.py`** — dynamic campaign-specific personas grounded in web-researched audience data (replaces static Alex/Morgan/Casey templates); graceful fallback if search fails
+- [x] **QA reviewer calculator tool** — OpenAI function calling (`verify_campaign_math`) in `qa_reviewer.py`; two-pass flow: Pass 1 allows tool call (ROAS × budget math check), Pass 2 forces JSON review output; catches ROI direction vs ROAS contradictions deterministically
+
+### QA Reviewer Agent (Stage 7)
+- [x] `QAReview` + `QAFlag` schemas — in `schemas.py` and frontend `types/index.ts`
+- [x] `qa_reviewer.py` — independent LLM pass reviewing full simulation against 7 criteria: forecast-persona consistency, risk specificity, recommendation-weakness alignment, persona differentiation, optimized copy quality, narrative coherence, numeric consistency (via calculator tool)
+- [x] `simulation_orchestrator.py` — wired as Stage 7 after re-simulation completes
+- [x] `ResultsPage.tsx` — `QAReviewPanel`: verdict badge (Pass/Partial Pass/Needs Improvement), confidence score bar, reviewer notes, expandable flags list with severity tags
+
+### Prompt Caching / Token Optimization
+- [x] Stable `_SYSTEM_PROMPT` constants extracted in all service files (campaign_analyzer, persona_generator, forecast_engine, recommendation_engine) — enables OpenAI prompt caching
+- [x] `asyncio.gather()` parallelization: Stage 1 + audience research run simultaneously; Stage 4 + 5 run simultaneously; re-sim Stage 6a + 6b run simultaneously
+- [x] RAG `n_results` trimmed (3→2 in forecast, 4→2 in recommendations)
+- [x] `max_completion_tokens` budgets trimmed across all service calls
 
 ---
 
 ## What Is NOT Done Yet
 
-### Backend
-- [ ] `DimensionScores` numeric sub-scores in `CampaignAnalysis` (in progress this session)
-- [ ] No error handling / retry logic on OpenAI calls
-- [ ] Uploaded images not cleaned up
-
 ### Frontend
-- [ ] Chart.js visualizations (radar, sparklines) — in progress this session
 - [ ] No mobile responsiveness
+- [ ] Error handling UI — proper error states on InputPage if simulation fails
+- [ ] Loading skeleton on ResultsPage
 
 ### Deployment
-- [ ] No deployment configured yet
+- [ ] No deployment configured yet (highest priority remaining item)
+- [ ] `VITE_API_URL` env var — replace hardcoded `localhost:8000` in `lib/api.ts`
+
+### Polish
+- [ ] Uploaded images not cleaned up from `backend/uploads/`
+- [ ] No retry/backoff logic on OpenAI calls
+- [ ] ROAS-flip demo moment — animated before/after numbers not yet dramatically styled
 
 ---
 
 ## Immediate Next Steps (Priority Order)
 
-1. **ROAS-flip demo moment** — dramatic before/after with real numbers (ML + QA layers done)
-2. **Prompt caching / token optimization** — reduce cost and latency
-3. **Deployment** — configure for demo day
+1. **Deployment** — configure for demo day (frontend static + backend hosted); update `VITE_API_URL`
+2. **Restart backend** — `uvicorn main:app --reload` to trigger ChromaDB re-index with enriched docs
+3. **ROAS-flip demo moment** — polish the before/after section with animated number transitions
+4. **Error handling UI** — prevent silent failures on InputPage
+5. **Mobile responsiveness** — at least make it usable on a tablet for the demo
