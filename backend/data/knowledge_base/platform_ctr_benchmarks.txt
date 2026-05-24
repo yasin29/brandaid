@@ -1,0 +1,67 @@
+PLATFORM CTR BENCHMARKS — DIGITAL ADVERTISING
+
+Source: Industry aggregated benchmarks (WordStream, HubSpot, Statista, Meta Business Insights, Google Ads benchmarks 2023–2024)
+
+---
+
+GOOGLE SEARCH ADS
+- Average CTR (all industries): 3.17%
+- High-performing campaigns: 5%–8%
+- Below average: <1.5%
+- Best industries: Legal (4.35%), Dating (6.05%), Finance (2.65%)
+- Worst industries: Technology (1.84%), B2B (2.41%)
+
+GOOGLE DISPLAY ADS
+- Average CTR: 0.35%–0.46%
+- High-performing: 1%+
+- Display CTR is typically 10x lower than Search
+- Remarketing campaigns: 0.7%–1.2%
+
+META / FACEBOOK ADS
+- Average CTR (all formats): 0.9%–1.5%
+- Feed ads: 0.9%
+- Stories ads: 0.6%–1.2%
+- High-performing campaigns: 2%–5%
+- Retail/e-commerce average: 1.59%
+- Finance: 0.56%
+- Technology: 1.04%
+
+INSTAGRAM ADS
+- Average CTR: 0.68%–1.2%
+- Stories: 0.5%–1.0%
+- Reels: 1.2%–2.5% (higher engagement format)
+- Shopping ads: 0.8%–1.8%
+- Strong visual campaigns can reach 3%+
+
+LINKEDIN ADS
+- Average CTR: 0.35%–0.65%
+- Sponsored content: 0.35%–0.50%
+- Message ads (InMail): 15%–25% open rate, 3%–5% CTR
+- Lead gen forms: 10%–13% conversion rate after click
+- B2B targeting performs significantly better than B2C on LinkedIn
+
+TIKTOK ADS
+- Average CTR: 0.5%–1.5%
+- In-feed ads: 0.5%–1.8%
+- TopView ads: 12%–16% CTR (premium placement)
+- Branded hashtag challenges: high engagement but not direct CTR
+- Gen Z and Millennial audiences: 1.5%–3% on well-produced creative
+
+TWITTER / X ADS
+- Average CTR: 0.4%–0.9%
+- Promoted tweets: 1%–3% engagement rate
+- Website cards: 0.5%–1.2%
+
+YOUTUBE ADS
+- Average CTR (skippable in-stream): 0.3%–0.5%
+- Non-skippable: 0.4%–0.8%
+- Bumper ads (6s): awareness-focused, CTR less relevant
+- Reminder: YouTube CTR is lower but view-through conversions are high
+
+---
+
+INTERPRETATION GUIDE
+
+A CTR above platform average indicates strong creative-audience fit.
+A CTR below 50% of platform average suggests poor targeting, weak creative, or audience mismatch.
+CTR alone does not indicate profitability — always consider conversion rate and CPA alongside CTR.

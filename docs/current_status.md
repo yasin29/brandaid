@@ -1,6 +1,6 @@
 # Current Status
 
-**Last updated:** 2026-05-24
+**Last updated:** 2026-05-25
 **Branch:** main
 **Last commit:** `ff73c78` — Redesign UI to match team mock-up: light/dark hybrid, indigo + emerald theme
 
@@ -47,7 +47,7 @@
 
 ---
 
-## Completed This Session (2026-05-24)
+## Completed This Session (2026-05-25)
 
 - [x] **Backend**: Added `DimensionScores` model (numeric 0–10 per dimension) to `CampaignAnalysis` schema
 - [x] **Backend**: Updated `campaign_analyzer.py` prompt to return sub-scores alongside text
@@ -60,13 +60,24 @@
   - ProcessingPage: indigo orb, pipeline step list matching team's loading overlay
   - ResultsPage: dark hero with 4 metric cards + confidence breakdown bars; light 2-col body; emerald radar; sticky bottom action bar ("Rerun" + "Get Launch Plan")
 
+### RAG Integration (2026-05-25)
+- [x] **Knowledge base** — 5 documents seeded in `backend/data/knowledge_base/`:
+  - `platform_ctr_benchmarks.txt` — CTR by platform (Google, Meta, Instagram, LinkedIn, TikTok, YouTube, Twitter)
+  - `roas_conversion_benchmarks.txt` — ROAS by industry/platform, conversion rates, CPA, budget efficiency
+  - `audience_psychology.txt` — Gen Z/Millennial/GenX/Boomer profiles, emotional triggers, trust signals
+  - `platform_best_practices.txt` — Creative and targeting best practices per platform
+  - `campaign_creative_guidelines.txt` — Copy effectiveness, visual signals, emotional tone, trust integration
+- [x] **`rag_service.py`** — ChromaDB PersistentClient, auto-indexes on startup, cosine similarity retrieval, 500-word overlapping chunks, skips already-indexed docs
+- [x] **FastAPI lifespan** — `initialize_rag()` called on server startup via `@asynccontextmanager lifespan`
+- [x] **`forecast_engine.py`** — RAG retrieves CTR/ROAS benchmarks and injects into forecast prompt
+- [x] **`recommendation_engine.py`** — RAG retrieves platform best practices and injects into recommendation prompt
+
 ---
 
 ## What Is NOT Done Yet
 
 ### Backend
 - [ ] `DimensionScores` numeric sub-scores in `CampaignAnalysis` (in progress this session)
-- [ ] RAG service not implemented (ChromaDB empty, no knowledge base documents)
 - [ ] ML forecast layer — lightweight sklearn model for data-backed CTR/ROAS predictions
 - [ ] No error handling / retry logic on OpenAI calls
 - [ ] Uploaded images not cleaned up
@@ -82,8 +93,6 @@
 
 ## Immediate Next Steps (Priority Order)
 
-1. **Complete in-progress session items** (backend schema + frontend V2 pages)
-2. **RAG integration** — seed knowledge base, implement retrieval in forecast/recommendation prompts
-3. **ML forecast layer** — train sklearn model on Kaggle ad dataset, add numeric CTR/ROAS to `ForecastMetrics`
+1. **ML forecast layer** — train sklearn model on Kaggle ad dataset, add numeric CTR/ROAS to `ForecastMetrics`
 4. **ROAS-flip demo moment** — dramatic before/after with real numbers (unblocked after ML layer)
 5. **Deployment** — configure for demo day

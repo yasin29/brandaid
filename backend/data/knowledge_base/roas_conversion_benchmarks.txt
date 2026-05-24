@@ -1,0 +1,86 @@
+ROAS AND CONVERSION RATE BENCHMARKS — DIGITAL ADVERTISING
+
+Source: Industry aggregated benchmarks (Nielsen, WordStream, HubSpot, Shopify, Google, Meta 2023–2024)
+
+---
+
+RETURN ON AD SPEND (ROAS) — BY INDUSTRY
+
+ROAS = Revenue generated / Ad spend
+A ROAS of 4x means $4 earned for every $1 spent.
+
+Minimum viable ROAS (break-even, assuming 25% margin): 4x
+Strong ROAS: 6x–10x
+Exceptional ROAS: 10x+
+
+By Industry:
+- E-commerce / Retail: 4x–8x average, 10x+ top performers
+- Fashion / Apparel: 3x–6x
+- Health & Wellness: 5x–9x
+- Software / SaaS: 3x–5x (higher LTV offsets lower ROAS)
+- Finance / Insurance: 2x–4x (high CPA but high LTV)
+- Food & Beverage: 4x–7x
+- Education: 3x–6x
+- Travel: 4x–8x (highly seasonal)
+- Beauty / Cosmetics: 5x–10x
+- B2B Services: 2x–4x (long sales cycle)
+
+By Platform:
+- Google Search: 5x–10x (high intent)
+- Google Shopping: 4x–8x
+- Meta/Facebook: 3x–6x
+- Instagram: 3x–7x
+- TikTok: 2x–5x (brand awareness heavy)
+- LinkedIn: 1.5x–3x (high CPC, but B2B LTV)
+- YouTube: 3x–6x (view-through attribution)
+
+---
+
+CONVERSION RATES — BY INDUSTRY AND FUNNEL STAGE
+
+Landing page conversion rates (visit → lead):
+- E-commerce: 2.5%–4%
+- SaaS / Software: 3%–7%
+- Finance: 5%–11%
+- Healthcare: 3%–6%
+- Legal: 6%–12%
+- Real Estate: 2%–4%
+- Travel: 2%–4%
+
+E-commerce checkout conversion (add to cart → purchase):
+- Average: 2.5%–3.5%
+- High-performing: 5%+
+- Mobile typically 30%–40% lower than desktop
+
+Lead-to-customer conversion (B2B):
+- Average: 2%–5%
+- With strong nurture: 10%–15%
+
+---
+
+COST PER ACQUISITION (CPA) — BY PLATFORM
+
+Google Search Ads average CPA (all industries): $48
+Meta/Facebook average CPA: $18
+Instagram average CPA: $22
+LinkedIn average CPA: $98 (B2B, high LTV justified)
+TikTok average CPA: $14–$25
+YouTube average CPA: $38
+
+---
+
+BUDGET EFFICIENCY SIGNALS
+
+Low budget (<$500/month): Insufficient data collection, high CPA, use narrow targeting
+Mid budget ($500–$5,000/month): Can test 2–3 audiences, some optimization possible
+High budget ($5,000–$50,000/month): A/B testing, lookalike audiences, full funnel strategy
+Enterprise ($50k+/month): Algorithmic optimization, cross-platform attribution, custom audiences
+
+---
+
+CAMPAIGN OBJECTIVE IMPACT ON METRICS
+
+Awareness campaigns: Optimize for impressions, reach, CPM — not CTR or ROAS
+Consideration campaigns: Optimize for CTR, CPC, video views
+Conversion campaigns: Optimize for ROAS, CPA, conversion rate
+Retargeting campaigns: Typically 2x–5x better ROAS than prospecting

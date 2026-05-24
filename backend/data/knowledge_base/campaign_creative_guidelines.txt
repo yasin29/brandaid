@@ -1,0 +1,107 @@
+CAMPAIGN CREATIVE QUALITY GUIDELINES
+
+Source: Nielsen Creative AI study, Kantar Millward Brown, Meta Creative Shop, Google Creative Works 2023–2024
+
+---
+
+CREATIVE QUALITY IMPACT ON PERFORMANCE
+
+Creative quality accounts for 56%–70% of a campaign's performance variation (Nielsen 2023).
+The same product with superior creative can achieve 3x–5x higher ROAS.
+Targeting and bidding improvements yield diminishing returns after 20% variance; creative has no ceiling.
+
+---
+
+AD COPY EFFECTIVENESS PRINCIPLES
+
+HEADLINE
+- Length: 5–10 words optimal for digital; 6 words is the cognitive sweet spot
+- Must lead with the user's desired outcome, not the product feature
+  Bad: "Our CRM has 200+ integrations"
+  Good: "Close 40% more deals — from one dashboard"
+- Include a power word: proven, free, instantly, guaranteed, new, exclusive, secret
+- Create a curiosity gap or tension to drive the click
+
+BODY COPY
+- AIDA structure: Attention → Interest → Desire → Action
+- Speak to one pain point or one desire — not multiple
+- Use "you" language, not "we" language
+- Short sentences. Under 20 words. One idea per line.
+- Specificity beats vague claims: "saved 2.3 hours per week" > "saves time"
+
+CALL TO ACTION
+- Best performing CTAs: "Get Started", "Try Free", "Shop Now", "Learn More", "Book a Demo"
+- Weak CTAs: "Click Here", "Submit", "Send", "Go"
+- Urgency CTAs: "Claim Your Offer", "Get 30% Off Today" — effective but overuse causes fatigue
+- Match CTA to funnel stage: awareness = "Learn More", conversion = "Buy Now" / "Get Started"
+
+---
+
+VISUAL CREATIVE SIGNALS
+
+HIGH-PERFORMING VISUAL SIGNALS:
+- Human faces: 35%–80% higher engagement vs. product-only images
+- Direct eye contact: Triggers attention response in viewers
+- Bright, high-contrast images: Outperform low-contrast by 60% in feed environments
+- Single focal point: Clear subject without visual clutter
+- Brand colors visible within first 2 seconds
+- Motion/animation: 3x higher engagement for static formats
+
+LOW-PERFORMING VISUAL SIGNALS:
+- Generic stock photos (especially handshakes, diverse groups, pointing at screens)
+- Overcrowded compositions — more than 3–4 elements confuses the eye
+- Dark or desaturated imagery for consumer products
+- Small text that doesn't read on mobile
+
+IMAGE vs VIDEO PERFORMANCE:
+- Video outperforms image by 48% for awareness campaigns
+- Static image outperforms video for direct response in some e-commerce contexts
+- Carousel underused: 3x engagement rate vs single image for multi-product showcase
+
+---
+
+EMOTIONAL TONE AND AD PERFORMANCE
+
+TONE EFFECTIVENESS BY OBJECTIVE:
+- Humor: High engagement and shareability, lower conversion — good for brand awareness
+- Inspirational: High engagement with aspirational audiences; weaker for value-conscious buyers
+- Fear/urgency: High CTR, risk of negative brand association if overused
+- Empathy: Strong for healthcare, finance, social causes — builds trust
+- Educational: High completion rates for video; builds authority
+- Excitement/energy: Works well for sports, gaming, consumer tech, Gen Z
+- Calm/authoritative: Works well for finance, B2B, healthcare
+
+EMOTIONAL RESONANCE FRAMEWORK:
+1. What does the audience FEAR losing?
+2. What do they DESIRE gaining?
+3. What FRUSTRATION are they experiencing?
+4. How does this product solve that specific friction?
+
+Ads that map to all 4 consistently outperform single-emotion ads.
+
+---
+
+COPY CLARITY SCORING (0–10 SCALE)
+
+10 — Perfect clarity: Any viewer understands the offer in under 3 seconds
+7–9 — Strong clarity: Message is clear; minor ambiguity on details
+4–6 — Moderate clarity: Core message present but supporting copy confusing
+1–3 — Poor clarity: Viewer unsure what is being sold or why it matters
+0 — Unclear: No discernible message or value proposition
+
+Campaigns scoring below 6 typically see CTR drop 40%–60% vs. clear alternatives.
+
+---
+
+TRUST SIGNAL INTEGRATION IN CREATIVE
+
+Integration that improves conversion:
+- Social proof in copy: "Join 250,000 marketers who..." — boosts CTR 15%–25%
+- Guarantee in CTA area: "30-day money back" — reduces purchase hesitation 35%
+- Real testimonial overlay: More credible than brand copy alone
+- Rating badge: "4.8/5 stars from 10,000 reviews" — strongest trust signal for e-commerce
+
+Integration mistakes:
+- Trust signals buried at bottom of ad: Must be in first 3 seconds of view
+- Generic badges with no specifics: "Trusted by businesses" — ignored
+- Overloading the creative with multiple trust elements: Pick one, make it prominent

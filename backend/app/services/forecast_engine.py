@@ -1,5 +1,6 @@
 import json
 from app.services.openai_client import client
+from app.services import rag_service
 from app.core.config import settings
 from app.models.schemas import CampaignInput, CampaignAnalysis, PersonaReaction, ForecastMetrics
 
@@ -15,12 +16,23 @@ async def generate_forecast(
         for p in personas
     ])
 
+    rag_query = f"{campaign.platform} CTR benchmark ROAS conversion rate {campaign.objective}"
+    benchmark_context = rag_service.retrieve(rag_query, n_results=4)
+    rag_section = (
+        f"\nIndustry benchmark data for reference:\n{benchmark_context}\n"
+        if benchmark_context
+        else ""
+    )
+
     prompt = (
-        f"You are a campaign performance forecasting AI. Based on the campaign and simulation data below, "
-        f"generate directional performance forecasts. These are simulated estimates, not guarantees.\n\n"
+        f"You are a campaign performance forecasting AI. Based on the campaign, simulation data, "
+        f"and industry benchmarks below, generate directional performance forecasts.\n"
+        f"Use the benchmark data to ground your CTR range and ROAS estimates in real industry figures.\n"
+        f"These are simulated estimates, not guarantees.\n\n"
         f"Campaign: {campaign.objective} on {campaign.platform} | Budget: {campaign.budget}\n"
         f"Analysis score: {analysis.overall_score}/100\n"
-        f"Persona reactions:\n{persona_summary}\n\n"
+        f"Persona reactions:\n{persona_summary}\n"
+        f"{rag_section}\n"
         f"Return a JSON object with:\n"
         f"- forecast: object with ctr_range (e.g. '1.2%–2.8%'), engagement_estimate (string), "
         f"conversion_trend (string), confidence_level (Low/Medium/High), roi_direction (Negative/Neutral/Positive)\n"
