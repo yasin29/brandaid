@@ -27,6 +27,7 @@ class ForecastMetrics(BaseModel):
     conversion_trend: str
     confidence_level: str
     roi_direction: str
+    roas_range: Optional[str] = None
 
 
 class DimensionScores(BaseModel):

@@ -60,6 +60,14 @@
   - ProcessingPage: indigo orb, pipeline step list matching team's loading overlay
   - ResultsPage: dark hero with 4 metric cards + confidence breakdown bars; light 2-col body; emerald radar; sticky bottom action bar ("Rerun" + "Get Launch Plan")
 
+### ML Forecast Layer (2026-05-25)
+- [x] **Kaggle dataset** — `Global Ads Performance (Google, Meta, TikTok)` — 1,800 rows, CTR + ROAS + spend
+- [x] **`scripts/train_forecast_model.py`** — EDA-informed training: platform (84% importance) + budget_tier (12%) + campaign_type; R²=0.49, MAE=0.97%
+- [x] **`data/models/`** — `ctr_model.joblib`, `encoders.joblib`, `dist_stats.json` (per-platform Q25/Q50/Q75 bands for ROAS)
+- [x] **`ml_forecast_service.py`** — lazy-loads model, maps app platform/objective/budget → dataset categories, applies campaign_score to percentile band selection
+- [x] **`forecast_engine.py`** — ML numbers injected into prompt as hard constraints; LLM narrates around ML-computed CTR and ROAS ranges
+- [x] **`ForecastMetrics` schema** — added optional `roas_range` field
+
 ### RAG Integration (2026-05-25)
 - [x] **Knowledge base** — 5 documents seeded in `backend/data/knowledge_base/`:
   - `platform_ctr_benchmarks.txt` — CTR by platform (Google, Meta, Instagram, LinkedIn, TikTok, YouTube, Twitter)
@@ -78,7 +86,6 @@
 
 ### Backend
 - [ ] `DimensionScores` numeric sub-scores in `CampaignAnalysis` (in progress this session)
-- [ ] ML forecast layer — lightweight sklearn model for data-backed CTR/ROAS predictions
 - [ ] No error handling / retry logic on OpenAI calls
 - [ ] Uploaded images not cleaned up
 
@@ -93,6 +100,6 @@
 
 ## Immediate Next Steps (Priority Order)
 
-1. **ML forecast layer** — train sklearn model on Kaggle ad dataset, add numeric CTR/ROAS to `ForecastMetrics`
-4. **ROAS-flip demo moment** — dramatic before/after with real numbers (unblocked after ML layer)
-5. **Deployment** — configure for demo day
+1. **AI reviewer/QA agent** — second LLM pass that critiques and quality-checks simulation output
+2. **ROAS-flip demo moment** — dramatic before/after with real numbers (now unblocked — ML layer done)
+3. **Deployment** — configure for demo day
