@@ -4,6 +4,18 @@ from app.services import rag_service, ml_forecast_service
 from app.core.config import settings
 from app.models.schemas import CampaignInput, CampaignAnalysis, PersonaReaction, ForecastMetrics
 
+_FORECAST_SYSTEM = (
+    "You are a campaign performance forecasting AI.\n"
+    "A Random Forest ML model has already computed data-backed CTR and ROAS ranges from 1,800 ad records. "
+    "Use those ranges verbatim — do NOT invent different figures.\n"
+    "Your job: write engagement_estimate, conversion_trend, confidence_level, roi_direction, and risks "
+    "that are consistent with the ML numbers and the campaign context provided.\n"
+    "Return a JSON object with:\n"
+    "- forecast: {ctr_range (ML range verbatim), engagement_estimate, conversion_trend, "
+    "confidence_level (Low/Medium/High), roi_direction (Negative/Neutral/Positive), roas_range (ML range verbatim)}\n"
+    "- risks: array of 3-5 short campaign-specific risk strings"
+)
+
 
 async def generate_forecast(
     campaign: CampaignInput,
@@ -16,53 +28,35 @@ async def generate_forecast(
         for p in personas
     ])
 
-    # ML model: data-backed CTR and ROAS ranges
     ml = ml_forecast_service.predict(
         platform=campaign.platform,
         objective=campaign.objective,
         budget=campaign.budget,
         campaign_score=analysis.overall_score,
     )
-    ml_section = (
-        f"\nML-predicted ranges (Random Forest trained on 1,800 ad records):\n"
-        f"  CTR range:  {ml.ctr_range_str}\n"
-        f"  ROAS range: {ml.roas_range_str}\n"
-        f"  (Platform: {ml.platform_used}, Budget tier: {ml.budget_tier})\n"
-    )
 
-    # RAG: industry benchmark context
     rag_query = f"{campaign.platform} CTR benchmark ROAS conversion rate {campaign.objective}"
-    benchmark_context = rag_service.retrieve(rag_query, n_results=3)
-    rag_section = (
-        f"\nIndustry benchmark context:\n{benchmark_context}\n"
-        if benchmark_context
-        else ""
-    )
+    benchmark_context = rag_service.retrieve(rag_query, n_results=2)
 
-    prompt = (
-        f"You are a campaign performance forecasting AI.\n"
-        f"The ML model has already computed data-backed CTR and ROAS ranges — use these as your numbers.\n"
-        f"Your job is to write the engagement estimate, conversion trend, confidence level, "
-        f"ROI direction, and risks in a way that is consistent with these ML numbers.\n"
-        f"Do NOT invent different CTR or ROAS figures — use the ML ranges verbatim in ctr_range.\n\n"
+    user_prompt = (
         f"Campaign: {campaign.objective} on {campaign.platform} | Budget: {campaign.budget}\n"
         f"Analysis score: {analysis.overall_score}/100\n"
-        f"Persona reactions:\n{persona_summary}\n"
-        f"{ml_section}"
-        f"{rag_section}\n"
-        f"Return a JSON object with:\n"
-        f"- forecast: object with ctr_range (use the ML range above verbatim), "
-        f"engagement_estimate (string), conversion_trend (string), "
-        f"confidence_level (Low/Medium/High), roi_direction (Negative/Neutral/Positive), "
-        f"roas_range (use the ML range above verbatim)\n"
-        f"- risks: array of 3-5 short risk strings"
+        f"Persona reactions:\n{persona_summary}\n\n"
+        f"ML-predicted ranges:\n"
+        f"  CTR: {ml.ctr_range_str}  ROAS: {ml.roas_range_str} "
+        f"(platform: {ml.platform_used}, tier: {ml.budget_tier})\n"
     )
+    if benchmark_context:
+        user_prompt += f"\nBenchmark context:\n{benchmark_context}\n"
 
     response = await client.chat.completions.create(
         model=settings.openai_chat_model,
-        messages=[{"role": "user", "content": prompt}],
+        messages=[
+            {"role": "system", "content": _FORECAST_SYSTEM},
+            {"role": "user", "content": user_prompt},
+        ],
         response_format={"type": "json_object"},
-        max_completion_tokens=600,
+        max_completion_tokens=500,
     )
 
     data = json.loads(response.choices[0].message.content)

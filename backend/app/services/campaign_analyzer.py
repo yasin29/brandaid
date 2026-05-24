@@ -6,19 +6,28 @@ from app.core.config import settings
 from app.models.schemas import CampaignInput, CampaignAnalysis
 
 
+_SYSTEM_PROMPT = (
+    "You are a marketing strategist AI. Analyze the campaign provided by the user "
+    "and return a JSON object with exactly these keys:\n"
+    "- emotional_tone, cta_strength, audience_fit, trust_signals, clarity, emotional_appeal: "
+    "each a short descriptive string (1-2 sentences)\n"
+    "- overall_score: integer 1-100\n"
+    "- dimension_scores: a nested object with the same 6 keys, each an integer 0-10 "
+    "(0 = very weak, 10 = excellent)"
+)
+
+
 async def analyze_campaign(campaign: CampaignInput) -> CampaignAnalysis:
     messages = [
-        {
-            "role": "user",
-            "content": _build_content(campaign),
-        }
+        {"role": "system", "content": _SYSTEM_PROMPT},
+        {"role": "user", "content": _build_content(campaign)},
     ]
 
     response = await client.chat.completions.create(
         model=settings.openai_chat_model,
         messages=messages,
         response_format={"type": "json_object"},
-        max_completion_tokens=800,
+        max_completion_tokens=600,
     )
 
     data = json.loads(response.choices[0].message.content)
@@ -29,13 +38,6 @@ def _build_content(campaign: CampaignInput) -> list:
     text_block = {
         "type": "text",
         "text": (
-            f"You are a marketing strategist AI. Analyze this campaign and return a JSON object "
-            f"with exactly these keys:\n"
-            f"- emotional_tone, cta_strength, audience_fit, trust_signals, clarity, emotional_appeal: "
-            f"each a short descriptive string (1-2 sentences)\n"
-            f"- overall_score: integer 1-100\n"
-            f"- dimension_scores: a nested object with the same 6 keys as above, each an integer 0-10 "
-            f"representing the numeric score for that dimension (0 = very weak, 10 = excellent)\n\n"
             f"Campaign Objective: {campaign.objective}\n"
             f"Platform: {campaign.platform}\n"
             f"Target Audience: {campaign.target_audience}\n"
