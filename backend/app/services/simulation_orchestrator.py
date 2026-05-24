@@ -5,14 +5,18 @@ from app.services.persona_generator import generate_persona_reactions
 from app.services.forecast_engine import generate_forecast
 from app.services.recommendation_engine import generate_recommendations
 from app.services.qa_reviewer import run_qa_review
+from app.services.audience_researcher import research_audience
 
 
 async def run_simulation(campaign: CampaignInput) -> SimulationResult:
-    # Stage 1: Analyze campaign
-    analysis = await analyze_campaign(campaign)
+    # Stage 1 + audience research in parallel (research is independent of analysis)
+    analysis, audience_research = await asyncio.gather(
+        analyze_campaign(campaign),
+        research_audience(campaign),
+    )
 
-    # Stage 2 & 3: Generate personas
-    personas = await generate_persona_reactions(campaign)
+    # Stage 2 & 3: Generate personas grounded in web-researched audience data
+    personas = await generate_persona_reactions(campaign, audience_research=audience_research)
 
     # Stage 4 + 5 in parallel: forecast and recommendations are independent of each other
     (forecast, risks), (recommendations, optimized_copy) = await asyncio.gather(
@@ -32,7 +36,7 @@ async def run_simulation(campaign: CampaignInput) -> SimulationResult:
     )
     optimized_analysis, optimized_personas = await asyncio.gather(
         analyze_campaign(optimized_campaign),
-        generate_persona_reactions(optimized_campaign),
+        generate_persona_reactions(optimized_campaign, audience_research=audience_research),
     )
     optimized_forecast, _ = await generate_forecast(
         optimized_campaign, optimized_analysis, optimized_personas

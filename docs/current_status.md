@@ -60,6 +60,11 @@
   - ProcessingPage: indigo orb, pipeline step list matching team's loading overlay
   - ResultsPage: dark hero with 4 metric cards + confidence breakdown bars; light 2-col body; emerald radar; sticky bottom action bar ("Rerun" + "Get Launch Plan")
 
+### Agentic Web Search — Audience Research (2026-05-25)
+- [x] **`audience_researcher.py`** — uses OpenAI Responses API (`client.responses.create`) with built-in `web_search_preview` tool; model autonomously searches for current platform demographics, target audience behavior, and campaign format data; returns 300-500 word research brief grounded in real 2024-2025 sources
+- [x] **`persona_generator.py`** — now accepts `audience_research` string; generates 3 dynamic, campaign-specific personas instead of static Alex/Morgan/Casey templates; system prompt variant activates when research is available
+- [x] **Orchestrator** — audience research runs in parallel with Stage 1 (campaign analysis) via `asyncio.gather()` — web search latency is hidden; research also passed to re-simulation persona generation (same audience, no repeat search)
+
 ### QA Reviewer Agent (2026-05-25)
 - [x] **`QAReview` + `QAFlag` schemas** — added to `schemas.py` and frontend `types/index.ts`
 - [x] **`qa_reviewer.py`** — Stage 7 of the pipeline; independent LLM pass reviewing full simulation output against 6 concrete criteria: forecast-persona consistency, risk specificity, recommendation-weakness alignment, persona differentiation, optimized copy quality, narrative coherence
