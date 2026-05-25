@@ -12,8 +12,10 @@ export default function NewCampaignPage() {
   const [step, setStep] = useState<Step>('input')
   const [result, setResult] = useState<SimulationResult | null>(null)
   const [meta, setMeta] = useState<CampaignMeta | null>(null)
+  const [errorMsg, setErrorMsg] = useState<string | null>(null)
 
   function handleStart(summary: { objective: string; platform: string }, adCopy: string) {
+    setErrorMsg(null)
     setMeta({ objective: summary.objective, platform: summary.platform, ad_copy: adCopy })
     setStep('processing')
   }
@@ -26,9 +28,15 @@ export default function NewCampaignPage() {
     setStep('results')
   }
 
+  function handleError(msg: string) {
+    setErrorMsg(msg || 'Simulation failed. Please try again.')
+    setStep('input')
+  }
+
   function handleReset() {
     setResult(null)
     setMeta(null)
+    setErrorMsg(null)
     setStep('input')
   }
 
@@ -38,7 +46,8 @@ export default function NewCampaignPage() {
         <InputPage
           onSimulationStart={(summary, adCopy) => handleStart(summary, adCopy)}
           onSimulationComplete={handleComplete}
-          onError={() => setStep('input')}
+          onError={handleError}
+          errorMessage={errorMsg}
         />
       )}
       {step === 'processing' && <ProcessingPage />}

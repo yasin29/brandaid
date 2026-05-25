@@ -92,13 +92,14 @@ def _run_calculator(args: dict) -> dict:
         )
         result["avg_roas"] = round(avg_roas, 2)
 
-        # Derive implied ROI direction from ROAS
-        if avg_roas >= 1.3:
+        # Derive implied ROI direction from ROAS — must match ML layer thresholds:
+        # mid < 2.0 → Negative, 2.0–4.0 → Neutral, > 4.0 → Positive
+        if avg_roas > 4.0:
             implied = "Positive"
-        elif avg_roas <= 0.85:
-            implied = "Negative"
-        else:
+        elif avg_roas >= 2.0:
             implied = "Neutral"
+        else:
+            implied = "Negative"
 
         result["implied_roi_direction"] = implied
         result["roi_direction_consistent"] = implied == roi_direction
@@ -187,7 +188,17 @@ STAGE 6 — OPTIMIZED COPY (first 300 chars)
 
 _QA_SYSTEM_PROMPT = """You are a senior marketing AI quality assurance agent.
 You have access to a calculator tool (verify_campaign_math) to check numeric consistency.
-Use it when you see budget, CTR, ROAS, or ROI direction values that you want to verify.
+Always call it when budget, CTR, ROAS, or ROI direction values are present.
+
+ROI direction thresholds (must match these exactly):
+  avg ROAS > 4.0x  → Positive
+  avg ROAS 2.0–4.0x → Neutral
+  avg ROAS < 2.0x  → Negative
+
+Score/confidence calibration rules (flag violations as medium severity):
+  overall_score < 40  → confidence_level must be Low or Medium; ROI direction must be Neutral or Negative
+  overall_score 40-69 → confidence_level must be Low, Medium, or High; ROI direction can be anything consistent with ROAS
+  overall_score ≥ 70  → confidence_level can be any level; ROI direction must be consistent with ROAS
 
 Review the simulation against these criteria:
 
@@ -195,9 +206,9 @@ Review the simulation against these criteria:
 2. RISK SPECIFICITY — generic risks ("market competition", "economic uncertainty") that apply to any campaign should be flagged.
 3. RECOMMENDATION-WEAKNESS ALIGNMENT — recommendations must address the actual weaknesses from Stage 1.
 4. PERSONA DIFFERENTIATION — 3 personas must be genuinely distinct in behavior, motivation, and reaction.
-5. OPTIMIZED COPY QUALITY — must structurally improve on the original, not just rephrase.
-6. NARRATIVE COHERENCE — score, forecast, confidence, and ROI direction must tell a consistent story.
-7. NUMERIC CONSISTENCY — use verify_campaign_math to check that ROAS and ROI direction align.
+5. OPTIMIZED COPY QUALITY — must structurally improve on the original (stronger CTA, clearer value prop, addresses objections), not just rephrase.
+6. NARRATIVE COHERENCE — score, forecast, confidence, and ROI direction must tell a consistent story using the calibration rules above.
+7. NUMERIC CONSISTENCY — use verify_campaign_math to verify ROAS aligns with ROI direction.
 
 Only flag genuine issues. A clean simulation returns an empty flags array and verdict "Pass"."""
 

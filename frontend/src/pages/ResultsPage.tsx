@@ -14,7 +14,7 @@ Chart.register(RadarController, RadialLinearScale, PointElement, LineElement, Fi
 
 interface Props {
   result: SimulationResult
-  campaignSummary: { objective: string; platform: string } | null
+  campaignSummary: { objective: string; platform: string; ad_copy: string } | null
   onReset: () => void
 }
 
@@ -293,25 +293,77 @@ function PersonaCard({ persona }: { persona: SimulationResult['personas'][0] }) 
 
 // ── Before / After ────────────────────────────────────────────────────────────
 
-function BeforeAfter({ result }: { result: SimulationResult }) {
+const ROI_ORDER: Record<string, number> = { Negative: 0, Neutral: 1, Positive: 2 }
+const CONF_ORDER: Record<string, number> = { Low: 0, Medium: 1, High: 2 }
+
+function parseCtrMid(s: string): number {
+  const m = s.match(/([\d.]+)/g)
+  if (!m || m.length < 2) return parseFloat(m?.[0] ?? '0')
+  return (parseFloat(m[0]) + parseFloat(m[1])) / 2
+}
+
+function compareForecasts(orig: SimulationResult['forecast'], opt: SimulationResult['forecast']): 'improved' | 'similar' | 'degraded' {
+  const roiDiff = (ROI_ORDER[opt.roi_direction] ?? 1) - (ROI_ORDER[orig.roi_direction] ?? 1)
+  if (roiDiff > 0) return 'improved'
+  if (roiDiff < 0) return 'degraded'
+  const confDiff = (CONF_ORDER[opt.confidence_level] ?? 1) - (CONF_ORDER[orig.confidence_level] ?? 1)
+  if (confDiff > 0) return 'improved'
+  if (confDiff < 0) return 'degraded'
+  const ctrDiff = parseCtrMid(opt.ctr_range) - parseCtrMid(orig.ctr_range)
+  if (ctrDiff > 0.2) return 'improved'
+  if (ctrDiff < -0.2) return 'degraded'
+  return 'similar'
+}
+
+function roiPillCls(dir: string) {
+  if (dir === 'Positive') return 'bg-emerald-100 text-emerald-800 border-emerald-200'
+  if (dir === 'Negative') return 'bg-red-100 text-red-800 border-red-200'
+  return 'bg-amber-100 text-amber-800 border-amber-200'
+}
+
+function BeforeAfter({ result, originalAdCopy }: { result: SimulationResult; originalAdCopy: string }) {
   if (!result.optimized_copy || !result.optimized_forecast) return null
   const orig = result.forecast
   const opt = result.optimized_forecast
+  const comparison = compareForecasts(orig, opt)
+  const [visible, setVisible] = useState(false)
+  const sectionRef = useRef<HTMLElement>(null)
+
+  useEffect(() => {
+    const el = sectionRef.current
+    if (!el) return
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setVisible(true); obs.disconnect() } },
+      { threshold: 0.2 }
+    )
+    obs.observe(el)
+    return () => obs.disconnect()
+  }, [])
+
+  const badgeConfig = {
+    improved: { label: 'Improved ✓', cls: 'bg-emerald-600 text-white', border: 'border-emerald-500', grad: 'from-emerald-50 to-white' },
+    similar:  { label: 'Marginal ~', cls: 'bg-slate-500 text-white',   border: 'border-slate-400',   grad: 'from-slate-50 to-white' },
+    degraded: { label: 'Caution ↓', cls: 'bg-amber-600 text-white',   border: 'border-amber-400',   grad: 'from-amber-50 to-white' },
+  }[comparison]
+
+  const roiChanged = orig.roi_direction !== opt.roi_direction
+  const confChanged = orig.confidence_level !== opt.confidence_level
+  const ctrMidDiff = parseCtrMid(opt.ctr_range) - parseCtrMid(orig.ctr_range)
 
   return (
-    <section className="bg-white border-t-2 border-emerald-100 px-8 py-12">
+    <section ref={sectionRef} className="bg-white border-t-2 border-slate-100 px-8 py-12">
       <div className="max-w-5xl mx-auto">
         <div className="flex items-center justify-center gap-4 mb-8 flex-wrap">
           <span className="text-[11px] font-bold bg-slate-100 text-slate-600 px-4 py-1.5 rounded-full uppercase tracking-wider">Before</span>
-          <span className="text-emerald-500 text-xl font-bold">→ →</span>
-          <span className="text-[11px] font-bold bg-emerald-100 text-emerald-800 px-4 py-1.5 rounded-full uppercase tracking-wider">After Recommendations</span>
+          <span className="text-slate-400 text-xl font-bold">→</span>
+          <span className="text-[11px] font-bold bg-indigo-100 text-indigo-800 px-4 py-1.5 rounded-full uppercase tracking-wider">After AI Recommendations</span>
         </div>
 
         <div className="grid grid-cols-2 gap-6">
           {/* Before */}
           <div className="bg-white border-[1.5px] border-slate-200 rounded-2xl p-7">
             <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">Before</p>
-            <p className="text-slate-500 font-semibold mb-5">Original Prediction</p>
+            <p className="text-slate-500 font-semibold mb-5">Original Campaign</p>
             <div className="grid grid-cols-3 gap-4 mb-5">
               {[
                 { label: 'CTR', value: orig.ctr_range },
@@ -325,38 +377,83 @@ function BeforeAfter({ result }: { result: SimulationResult }) {
               ))}
             </div>
             <div className="pt-4 border-t border-slate-100">
-              <p className="text-[10px] uppercase tracking-wider text-slate-400 font-bold mb-2">Ad Copy</p>
+              <p className="text-[10px] uppercase tracking-wider text-slate-400 font-bold mb-2">Original Copy</p>
               <p className="text-slate-400 text-xs leading-relaxed line-through line-clamp-3">
-                {result.optimized_copy.substring(0, 120)}...
+                {originalAdCopy.substring(0, 160)}
               </p>
             </div>
           </div>
 
           {/* After */}
-          <div className="bg-gradient-to-br from-emerald-50 to-white border-2 border-emerald-500 rounded-2xl p-7 relative">
-            <span className="absolute top-0 right-0 bg-emerald-600 text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl rounded-tr-2xl tracking-wider">
-              Improved ✓
+          <div className={`bg-gradient-to-br ${badgeConfig.grad} border-2 ${badgeConfig.border} rounded-2xl p-7 relative overflow-hidden`}>
+            <span className={`absolute top-0 right-0 ${badgeConfig.cls} text-[10px] font-bold px-3 py-1 rounded-bl-xl rounded-tr-2xl tracking-wider`}>
+              {badgeConfig.label}
             </span>
-            <p className="text-[11px] font-bold uppercase tracking-wider text-emerald-700 mb-1">After</p>
-            <p className="text-slate-800 font-semibold mb-5">Optimized Prediction</p>
+            <p className="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">After</p>
+            <p className="text-slate-800 font-semibold mb-5">Re-Simulated Prediction</p>
             <div className="grid grid-cols-3 gap-4 mb-5">
-              {[
-                { label: 'CTR', value: opt.ctr_range, cls: 'text-emerald-700' },
-                { label: 'ROI', value: opt.roi_direction, cls: opt.roi_direction === 'Positive' ? 'text-emerald-700' : 'text-amber-700' },
-                { label: 'Confidence', value: opt.confidence_level, cls: 'text-indigo-700' },
-              ].map(({ label, value, cls }) => (
-                <div key={label}>
-                  <p className="text-[10px] uppercase tracking-wider text-slate-400 font-bold mb-1">{label}</p>
-                  <p className={`font-bold ${cls}`}>{value}</p>
-                </div>
-              ))}
+              <div>
+                <p className="text-[10px] uppercase tracking-wider text-slate-400 font-bold mb-1">CTR</p>
+                <p className={`font-bold transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'} text-slate-800`}>
+                  {opt.ctr_range}
+                </p>
+                {Math.abs(ctrMidDiff) > 0.1 && (
+                  <p className={`text-[10px] font-bold mt-0.5 ${ctrMidDiff > 0 ? 'text-emerald-600' : 'text-red-500'}`}>
+                    {ctrMidDiff > 0 ? '↑' : '↓'} {Math.abs(ctrMidDiff).toFixed(1)}pp
+                  </p>
+                )}
+              </div>
+              <div>
+                <p className="text-[10px] uppercase tracking-wider text-slate-400 font-bold mb-1">ROI</p>
+                <span className={`inline-block text-xs font-bold px-2 py-0.5 rounded-full border transition-all duration-700 ${visible ? 'opacity-100 scale-100' : 'opacity-0 scale-75'} ${roiPillCls(opt.roi_direction)}`}>
+                  {opt.roi_direction}
+                </span>
+                {roiChanged && (
+                  <p className="text-[10px] text-slate-400 mt-1">
+                    was <span className="font-semibold">{orig.roi_direction}</span>
+                  </p>
+                )}
+              </div>
+              <div>
+                <p className="text-[10px] uppercase tracking-wider text-slate-400 font-bold mb-1">Confidence</p>
+                <p className={`font-bold transition-all duration-700 delay-100 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'} text-indigo-700`}>
+                  {opt.confidence_level}
+                </p>
+                {confChanged && (
+                  <p className="text-[10px] text-slate-400 mt-0.5">was <span className="font-semibold">{orig.confidence_level}</span></p>
+                )}
+              </div>
             </div>
-            <div className="pt-4 border-t border-emerald-100">
+            <div className="pt-4 border-t border-slate-200">
               <p className="text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-2">Optimized Copy</p>
               <p className="text-slate-700 text-xs leading-relaxed line-clamp-3">{result.optimized_copy}</p>
             </div>
           </div>
         </div>
+
+        {/* Delta summary row */}
+        {comparison !== 'similar' && (roiChanged || confChanged || Math.abs(ctrMidDiff) > 0.1) && (
+          <div className="mt-5 flex flex-wrap gap-2 justify-center">
+            {roiChanged && (
+              <span className={`text-xs font-semibold px-3 py-1 rounded-full border ${ROI_ORDER[opt.roi_direction] > ROI_ORDER[orig.roi_direction] ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-red-50 text-red-700 border-red-200'}`}>
+                ROI: {orig.roi_direction} → {opt.roi_direction}
+              </span>
+            )}
+            {confChanged && (
+              <span className={`text-xs font-semibold px-3 py-1 rounded-full border ${CONF_ORDER[opt.confidence_level] > CONF_ORDER[orig.confidence_level] ? 'bg-indigo-50 text-indigo-700 border-indigo-200' : 'bg-slate-100 text-slate-600 border-slate-200'}`}>
+                Confidence: {orig.confidence_level} → {opt.confidence_level}
+              </span>
+            )}
+            {Math.abs(ctrMidDiff) > 0.1 && (
+              <span className={`text-xs font-semibold px-3 py-1 rounded-full border ${ctrMidDiff > 0 ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-red-50 text-red-700 border-red-200'}`}>
+                CTR midpoint {ctrMidDiff > 0 ? '+' : ''}{ctrMidDiff.toFixed(1)}pp
+              </span>
+            )}
+          </div>
+        )}
+        {comparison === 'similar' && (
+          <p className="mt-4 text-center text-xs text-slate-400">Re-simulation produced similar results — the original campaign's core metrics are within normal variance.</p>
+        )}
       </div>
     </section>
   )
@@ -737,7 +834,7 @@ export default function ResultsPage({ result, campaignSummary, onReset }: Props)
       </section>
 
       {/* ── Before / After ── */}
-      <BeforeAfter result={result} />
+      <BeforeAfter result={result} originalAdCopy={campaignSummary?.ad_copy ?? ''} />
 
       {/* ── Sticky Bottom Action Bar ── */}
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 px-8 py-4 z-30">

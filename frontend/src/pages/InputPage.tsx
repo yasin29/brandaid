@@ -176,9 +176,10 @@ interface Props {
   onSimulationStart: (summary: { objective: string; platform: string }, adCopy: string) => void
   onSimulationComplete: (result: SimulationResult) => void
   onError: (error: string) => void
+  errorMessage?: string | null
 }
 
-export default function InputPage({ onSimulationStart, onSimulationComplete, onError }: Props) {
+export default function InputPage({ onSimulationStart, onSimulationComplete, onError, errorMessage }: Props) {
   const [form, setForm] = useState<CampaignInput>({
     objective: '',
     platform: '',
@@ -302,6 +303,16 @@ export default function InputPage({ onSimulationStart, onSimulationComplete, onE
               </div>
               <Dropzone preview={imagePreview} onChange={handleImageChange} />
             </div>
+
+            {errorMessage && (
+              <div className="flex items-start gap-3 bg-red-50 border border-red-200 rounded-xl px-4 py-3 text-sm">
+                <span className="text-red-500 font-bold flex-shrink-0 mt-0.5">✕</span>
+                <div>
+                  <p className="font-semibold text-red-700">Simulation failed</p>
+                  <p className="text-red-600 mt-0.5 text-xs leading-relaxed">{errorMessage}</p>
+                </div>
+              </div>
+            )}
 
             <button
               type="submit"
