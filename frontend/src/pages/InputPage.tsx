@@ -173,7 +173,7 @@ function Dropzone({
 // ── Main component ─────────────────────────────────────────────────────────────
 
 interface Props {
-  onSimulationStart: (summary: { objective: string; platform: string }) => void
+  onSimulationStart: (summary: { objective: string; platform: string }, adCopy: string) => void
   onSimulationComplete: (result: SimulationResult) => void
   onError: (error: string) => void
 }
@@ -198,7 +198,7 @@ export default function InputPage({ onSimulationStart, onSimulationComplete, onE
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     const campaignData = { ...form, budget: `$${budgetValue.toLocaleString()}/month`, image }
-    onSimulationStart({ objective: form.objective, platform: form.platform })
+    onSimulationStart({ objective: form.objective, platform: form.platform }, form.ad_copy)
     try {
       const result = await runSimulation(campaignData)
       onSimulationComplete(result)

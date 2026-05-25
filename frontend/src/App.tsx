@@ -1,57 +1,33 @@
-import { useState } from 'react'
-import type { SimulationResult } from '@/types'
-import InputPage from '@/pages/InputPage'
-import ProcessingPage from '@/pages/ProcessingPage'
-import ResultsPage from '@/pages/ResultsPage'
-
-type Screen = 'input' | 'processing' | 'results'
-type CampaignSummary = { objective: string; platform: string }
+import { Routes, Route, Navigate } from 'react-router-dom'
+import LandingPage from '@/pages/LandingPage'
+import LoginPage from '@/pages/LoginPage'
+import PricingPage from '@/pages/PricingPage'
+import AppLayout from '@/layouts/AppLayout'
+import DashboardPage from '@/pages/app/DashboardPage'
+import NewCampaignPage from '@/pages/app/NewCampaignPage'
+import HistoryPage from '@/pages/app/HistoryPage'
+import ProtectedRoute from '@/components/ProtectedRoute'
 
 export default function App() {
-  const [screen, setScreen] = useState<Screen>('input')
-  const [result, setResult] = useState<SimulationResult | null>(null)
-  const [summary, setSummary] = useState<CampaignSummary | null>(null)
-  const [error, setError] = useState<string | null>(null)
-
   return (
-    <>
-      {screen === 'input' && (
-        <InputPage
-          onSimulationStart={(s) => {
-            setError(null)
-            setSummary(s)
-            setScreen('processing')
-          }}
-          onSimulationComplete={r => {
-            setResult(r)
-            setScreen('results')
-          }}
-          onError={e => {
-            setError(e)
-            setScreen('input')
-          }}
-        />
-      )}
-
-      {screen === 'processing' && <ProcessingPage />}
-
-      {screen === 'results' && result && (
-        <ResultsPage
-          result={result}
-          campaignSummary={summary}
-          onReset={() => {
-            setResult(null)
-            setSummary(null)
-            setScreen('input')
-          }}
-        />
-      )}
-
-      {error && (
-        <div className="fixed bottom-4 right-4 bg-red-600 text-white px-4 py-2 rounded-lg text-sm z-50 shadow-lg">
-          {error}
-        </div>
-      )}
-    </>
+    <Routes>
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/pricing" element={<PricingPage />} />
+      <Route
+        path="/app"
+        element={
+          <ProtectedRoute>
+            <AppLayout />
+          </ProtectedRoute>
+        }
+      >
+        <Route index element={<Navigate to="/app/dashboard" replace />} />
+        <Route path="dashboard" element={<DashboardPage />} />
+        <Route path="new" element={<NewCampaignPage />} />
+        <Route path="history" element={<HistoryPage />} />
+      </Route>
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
   )
 }
