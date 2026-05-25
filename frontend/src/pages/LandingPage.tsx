@@ -47,6 +47,7 @@ export default function LandingPage() {
             <a href="#how-it-works" className="hover:text-white transition-colors">How it works</a>
             <a href="#features" className="hover:text-white transition-colors">Features</a>
             <Link to="/pricing" className="hover:text-white transition-colors">Pricing</Link>
+            <Link to="/docs" className="hover:text-white transition-colors">Docs</Link>
           </div>
           <div className="flex items-center gap-3">
             <Link to="/login" className="text-sm text-slate-400 hover:text-white transition-colors px-3 py-1.5">
@@ -226,6 +227,7 @@ export default function LandingPage() {
             Brand-AId · Infinity AI Buildfest 2026
           </div>
           <div className="flex gap-6 text-sm text-slate-500">
+            <Link to="/docs" className="hover:text-slate-300 transition-colors">Documentation</Link>
             <Link to="/pricing" className="hover:text-slate-300 transition-colors">Pricing</Link>
             <Link to="/login" className="hover:text-slate-300 transition-colors">Sign in</Link>
           </div>

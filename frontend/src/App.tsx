@@ -7,12 +7,14 @@ import DashboardPage from '@/pages/app/DashboardPage'
 import NewCampaignPage from '@/pages/app/NewCampaignPage'
 import HistoryPage from '@/pages/app/HistoryPage'
 import DocsPage from '@/pages/app/DocsPage'
+import StandaloneDocsPage from '@/pages/StandaloneDocsPage'
 import ProtectedRoute from '@/components/ProtectedRoute'
 
 export default function App() {
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} />
+      <Route path="/docs" element={<StandaloneDocsPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/pricing" element={<PricingPage />} />
       <Route

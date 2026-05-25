@@ -46,7 +46,9 @@
 - [x] **InputPage V3 (7-step wizard)**: Goal → Purpose (9 contextual sub-forms) → Channels → Creative → Audience → Budget → Review; `PurposeContext` typed; all 9 sub-purpose forms implemented
 - [x] **Structured campaign fields**: `goal`, `sub_purpose`, `purpose_context`, `channels` added to `CampaignInput` end-to-end (frontend types, API client, backend schemas, route); `objective` + `platform` auto-derived for backward compat
 - [x] **AI prompt enrichment**: funnel stage, sub_purpose, channels, purpose_context injected into all 4 AI service prompts; goal-specific metric framing (Awareness→reach, Consideration→CTR/CPL, Conversion→ROAS/CPA)
-- [x] **`/docs` module**: live documentation page at `/app/docs` — pipeline walkthrough (7 stages), architecture, ML stats, RAG knowledge base, MCP integration, QA reviewer details, request flow, live backend health status
+- [x] **`/docs` module**: live documentation page at `/app/docs` and public `/docs` route (no login required) — pipeline (7 stages), campaign wizard structure (9 purpose paths), platform benchmark table, architecture, ML stats, RAG docs, MCP details, QA reviewer, asyncio DAG diagram, live playground (RAG query + ad copy analyzer)
+- [x] **README**: full rewrite — 7-stage table, tech stack, wizard structure, MCP details, all routes, env vars
+- [x] **Landing page**: Docs link in nav + Documentation link in footer
 - [x] **ProcessingPage**: indigo orb, pipeline step list, live progress bar
 - [x] **ResultsPage V2**: dark hero with 4 metric cards + confidence breakdown; light 2-col body; Chart.js radar; ranked rec cards; SVG sparklines; dramatic before/after; QAReviewPanel; sticky bottom action bar
 - [x] Full UI redesign: light/dark hybrid, indigo (#4338CA) + emerald (#059669) design system
