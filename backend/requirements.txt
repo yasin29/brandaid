@@ -7,3 +7,6 @@ chromadb
 pydantic
 pydantic-settings
 aiofiles
+mcp
+httpx
+duckduckgo-mcp-server

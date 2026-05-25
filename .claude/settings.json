@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "brand-aid": {
+      "command": "/home/alvi105/Projects/ai-buildfest/brand-AId/backend/.venv/bin/python",
+      "args": [
+        "/home/alvi105/Projects/ai-buildfest/brand-AId/mcp_server/server.py"
+      ],
+      "env": {
+        "BRAND_AID_BACKEND_URL": "http://localhost:8000"
+      }
+    }
+  }
+}

@@ -18,17 +18,38 @@ FastAPI Backend (port 8000)
         ▼
 Simulation Orchestrator
         │
+        ├── Stage 0: Audience Researcher    (Brave Search MCP → npx @mcp/server-brave-search)
+        │                                    (fallback: OpenAI web_search_preview)
         ├── Stage 1: Campaign Analyzer      (OpenAI multimodal)
-        ├── Stage 2+3: Persona Generator    (OpenAI chat)
-        ├── Stage 4: Forecast Engine        (OpenAI chat)
-        ├── Stage 5: Recommendation Engine  (OpenAI chat)
-        └── Stage 6: Re-Simulation          (runs stages 1-4 on optimized copy)
+        ├── Stage 2+3: Persona Generator    (OpenAI chat + web research)
+        ├── Stage 4: Forecast Engine        (OpenAI chat + RAG + ML model)
+        ├── Stage 5: Recommendation Engine  (OpenAI chat + RAG)
+        ├── Stage 6: Re-Simulation          (runs stages 1-4 on optimized copy)
+        └── Stage 7: QA Reviewer           (OpenAI function calling)
         │
         ▼
-ChromaDB (local vector store)       ← RAG layer (lightweight, future use)
+ChromaDB (local vector store)       ← RAG layer
         │
         ▼
 SimulationResult (JSON) → Frontend
+
+
+MCP Layer (parallel interface)
+        │
+        ▼
+Brand-AId MCP Server (mcp_server/server.py — FastMCP)
+        │
+        ├── Tool: simulate_campaign   → POST /api/simulate/
+        ├── Tool: analyze_ad_copy     → POST /api/analyze/
+        ├── Tool: query_benchmarks    → POST /api/benchmarks/
+        ├── Resource: benchmarks://ctr
+        ├── Resource: benchmarks://roas
+        ├── Resource: audiences://psychology
+        ├── Resource: audiences://platforms
+        └── Resource: audiences://creative
+        │
+        ▼
+Any MCP Client (Claude Code, Claude Desktop, custom agents)
 ```
 
 ---

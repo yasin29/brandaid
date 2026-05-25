@@ -4,6 +4,8 @@
 **Branch:** main
 **Last commit:** `cfa7400` — Enrich RAG knowledge base with 2024-2025 benchmark data; reset ChromaDB
 
+> Session 2026-05-25 (evening): MCP integration added — Brand-AId MCP server + Brave Search MCP client
+
 ---
 
 ## What Is Done
@@ -78,6 +80,15 @@
 - [x] `qa_reviewer.py` — independent LLM pass reviewing full simulation against 7 criteria: forecast-persona consistency, risk specificity, recommendation-weakness alignment, persona differentiation, optimized copy quality, narrative coherence, numeric consistency (via calculator tool)
 - [x] `simulation_orchestrator.py` — wired as Stage 7 after re-simulation completes
 - [x] `ResultsPage.tsx` — `QAReviewPanel`: verdict badge (Pass/Partial Pass/Needs Improvement), confidence score bar, reviewer notes, expandable flags list with severity tags
+
+### MCP Integration
+- [x] **Brand-AId MCP Server** (`mcp_server/server.py`) — FastMCP server exposing 3 tools + 5 resources:
+  - Tools: `simulate_campaign`, `analyze_ad_copy`, `query_benchmarks`
+  - Resources: `benchmarks://ctr`, `benchmarks://roas`, `audiences://psychology`, `audiences://platforms`, `audiences://creative`
+  - Registered in `.claude/settings.json` so Claude Code uses it automatically
+- [x] **Brave Search MCP Client** (`backend/app/services/brave_search_mcp.py`) — Python `mcp` stdio client to `@modelcontextprotocol/server-brave-search`; runs 3 parallel searches per simulation
+- [x] **`audience_researcher.py` updated** — uses Brave Search MCP when `BRAVE_API_KEY` is set; falls back to OpenAI `web_search_preview`
+- [x] **New FastAPI routes** — `/api/analyze/` (Stage 1 only) and `/api/benchmarks/` (RAG query) used as MCP tool backends
 
 ### Prompt Caching / Token Optimization
 - [x] Stable `_SYSTEM_PROMPT` constants extracted in all service files (campaign_analyzer, persona_generator, forecast_engine, recommendation_engine) — enables OpenAI prompt caching

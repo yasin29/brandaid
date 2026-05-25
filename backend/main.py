@@ -3,6 +3,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
 from app.routes.simulation import router as simulation_router
+from app.routes.analyze import router as analyze_router
+from app.routes.benchmarks import router as benchmarks_router
 from app.services.rag_service import initialize_rag
 
 
@@ -28,6 +30,8 @@ app.add_middleware(
 )
 
 app.include_router(simulation_router)
+app.include_router(analyze_router)
+app.include_router(benchmarks_router)
 
 
 @app.get("/health")

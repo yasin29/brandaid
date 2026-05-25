@@ -116,6 +116,13 @@ A record of key decisions made during development, with rationale. Read this bef
 ### Decision: ROAS model uses precomputed percentile bands, not a regression model
 **Why:** Attempted to train a ROAS regression model but R²≈0 — ROAS variance in the Kaggle dataset is driven by factors not captured in the features (industry, LTV, offer quality). Rather than shipping a useless model, we precomputed per-platform Q10/Q25/Q50/Q75/Q90 bands from the dataset. Campaign score (0-100 from analyzer) selects the percentile band. This is honest and more reliable than a random model.
 
+### Decision: MCP strategy — build one server + use one external server (2026-05-25)
+**Why:** Competition scoring awards points for building AND using MCP. Building Brand-AId as an MCP server makes the simulation engine callable by any MCP client (Claude Code, Claude Desktop, custom agents) without going through the REST API. Using Brave Search MCP for audience research replaces the OpenAI-proprietary `web_search_preview` with an open standard, and demonstrates MCP as a client.
+**Architecture:** Two MCP integration points:
+1. `mcp_server/server.py` (FastMCP) — custom Brand-AId server with 3 tools (`simulate_campaign`, `analyze_ad_copy`, `query_benchmarks`) and 5 resources (knowledge base docs). Registered in `.claude/settings.json` so Claude Code uses it in this project.
+2. `brave_search_mcp.py` — Python `mcp` stdio client connecting to `npx @modelcontextprotocol/server-brave-search`. `audience_researcher.py` uses this when `BRAVE_API_KEY` is set; falls back to OpenAI `web_search_preview` if not.
+**How to apply:** The Brand-AId MCP server calls the FastAPI backend via httpx (tools are HTTP wrappers), so the FastAPI server must be running. Resources read knowledge base files directly from disk (no backend required). Brave Search MCP spawns a Node.js subprocess per research call — acceptable since audience research happens once per simulation and runs in parallel with Stage 1.
+
 ### Decision: RAG knowledge base committed to git; ChromaDB reset when docs are enriched
 **Why:** Multi-device development requires the knowledge base content to be in git. ChromaDB's local SQLite store is also committed so the vector index survives git pulls. When knowledge base docs are updated, the old ChromaDB is deleted and the `chroma_db/` directory is reset to just a `.gitkeep` — the server re-indexes from scratch on next startup (takes ~5 seconds, acceptable for demo scope).
 **How to apply:** After updating any `.txt` file in `data/knowledge_base/`, delete `data/chroma_db/` contents (keep `.gitkeep`), commit, and restart the server. The lifespan handler calls `initialize_rag()` which detects the empty collection and re-indexes all documents.
