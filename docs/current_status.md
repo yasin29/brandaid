@@ -114,8 +114,9 @@
 - [ ] Loading skeleton on ResultsPage
 
 ### Deployment
-- [ ] No deployment configured yet (highest priority remaining item)
-- [ ] `VITE_API_URL` env var — replace hardcoded `localhost:8000` in `lib/api.ts`
+- [x] Docker setup — `docker-compose.yml`, `backend/Dockerfile`, `frontend/Dockerfile`, `frontend/nginx.conf`; all data baked inside image; nginx proxies /api/* to backend (single port 80)
+- [ ] Deploy to server — waiting for server credentials
+- [ ] `VITE_API_BASE` env var handled — empty string in Docker build makes API calls relative, proxied by nginx
 
 ### Polish
 - [ ] Uploaded images not cleaned up from `backend/uploads/`
