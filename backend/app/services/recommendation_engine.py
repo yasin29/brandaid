@@ -10,7 +10,7 @@ _REC_SYSTEM = (
     "Return a JSON object with:\n"
     "- recommendations: {improved_cta, stronger_messaging, audience_refinement, platform_strategy, "
     "optimization_tips (array of 3-5 strings)}\n"
-    "- optimized_copy: a fully rewritten version of the ad copy that addresses the identified weaknesses"
+    "- optimized_copy: a fully rewritten version of the ad copy as a single plain text string (no sub-keys, no JSON object — just the rewritten ad copy text)"
 )
 
 

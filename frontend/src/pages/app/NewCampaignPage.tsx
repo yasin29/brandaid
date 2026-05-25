@@ -20,7 +20,9 @@ export default function NewCampaignPage() {
 
   function handleComplete(r: SimulationResult) {
     setResult(r)
-    if (meta) saveSimulation(r, meta)
+    if (meta) {
+      try { saveSimulation(r, meta) } catch { /* non-fatal */ }
+    }
     setStep('results')
   }
 

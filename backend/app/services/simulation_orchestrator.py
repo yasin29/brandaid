@@ -1,4 +1,5 @@
 import asyncio
+import json
 from app.models.schemas import CampaignInput, SimulationResult
 from app.services.campaign_analyzer import analyze_campaign
 from app.services.persona_generator import generate_persona_reactions
@@ -25,6 +26,9 @@ async def run_simulation(campaign: CampaignInput) -> SimulationResult:
     )
 
     # Stage 6: Re-simulate with optimized copy
+    if not isinstance(optimized_copy, str):
+        optimized_copy = json.dumps(optimized_copy)
+
     # Stage 6a + 6b in parallel: re-analysis and re-personas are independent
     optimized_campaign = CampaignInput(
         objective=campaign.objective,

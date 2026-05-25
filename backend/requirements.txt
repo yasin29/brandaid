@@ -7,6 +7,10 @@ chromadb
 pydantic
 pydantic-settings
 aiofiles
+joblib
+numpy
+pandas
+scikit-learn
 mcp
 httpx
 duckduckgo-mcp-server
