@@ -30,7 +30,7 @@ These are required for the demo to work and impress judges.
 
 ## Tier 2 — Should Have (Strengthens Demo)
 
-- [ ] **`/docs` module** — live documentation page (submission requirement): pipeline walkthrough, architecture, tech stack, MCP integration, ML stats (Tier 1 — required for submission)
+- [x] **`/docs` module** — live documentation page at `/app/docs`: pipeline (7 stages), architecture, ML stats, RAG docs, MCP integration, QA reviewer, request flow, live health status
 - [ ] **ROAS-flip demo moment** — animated before/after number transitions (ML + QA layers in place; needs frontend polish)
 - [ ] **Error handling UI** — proper error states on InputPage if simulation fails (not just a silent hang)
 - [ ] **Loading skeleton** on ResultsPage while waiting

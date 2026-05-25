@@ -1,6 +1,6 @@
 # Current Status
 
-**Last updated:** 2026-05-25
+**Last updated:** 2026-05-25 (evening-3)
 **Branch:** main
 **Last commit:** `cfa7400` — Enrich RAG knowledge base with 2024-2025 benchmark data; reset ChromaDB
 
@@ -46,6 +46,7 @@
 - [x] **InputPage V3 (7-step wizard)**: Goal → Purpose (9 contextual sub-forms) → Channels → Creative → Audience → Budget → Review; `PurposeContext` typed; all 9 sub-purpose forms implemented
 - [x] **Structured campaign fields**: `goal`, `sub_purpose`, `purpose_context`, `channels` added to `CampaignInput` end-to-end (frontend types, API client, backend schemas, route); `objective` + `platform` auto-derived for backward compat
 - [x] **AI prompt enrichment**: funnel stage, sub_purpose, channels, purpose_context injected into all 4 AI service prompts; goal-specific metric framing (Awareness→reach, Consideration→CTR/CPL, Conversion→ROAS/CPA)
+- [x] **`/docs` module**: live documentation page at `/app/docs` — pipeline walkthrough (7 stages), architecture, ML stats, RAG knowledge base, MCP integration, QA reviewer details, request flow, live backend health status
 - [x] **ProcessingPage**: indigo orb, pipeline step list, live progress bar
 - [x] **ResultsPage V2**: dark hero with 4 metric cards + confidence breakdown; light 2-col body; Chart.js radar; ranked rec cards; SVG sparklines; dramatic before/after; QAReviewPanel; sticky bottom action bar
 - [x] Full UI redesign: light/dark hybrid, indigo (#4338CA) + emerald (#059669) design system

@@ -1,7 +1,7 @@
 import { Outlet, NavLink, useNavigate } from 'react-router-dom'
 import {
   LayoutDashboard, PlusCircle, History, LogOut,
-  Sparkles, ChevronRight,
+  Sparkles, ChevronRight, BookOpen,
 } from 'lucide-react'
 import { logout, getUser } from '@/lib/auth'
 
@@ -9,6 +9,7 @@ const NAV = [
   { to: '/app/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
   { to: '/app/new',       icon: PlusCircle,      label: 'New Campaign' },
   { to: '/app/history',   icon: History,         label: 'History' },
+  { to: '/app/docs',      icon: BookOpen,        label: 'Docs' },
 ]
 
 export default function AppLayout() {
