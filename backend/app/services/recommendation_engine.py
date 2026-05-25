@@ -18,15 +18,20 @@ async def generate_recommendations(
     campaign: CampaignInput,
     analysis: CampaignAnalysis,
 ) -> tuple[Recommendation, str]:
+    channels_text = ", ".join(campaign.channels) if campaign.channels else campaign.platform
+    # RAG query covers all active channels
     rag_query = (
-        f"{campaign.platform} advertising best practices {campaign.target_audience} "
+        f"{channels_text} advertising best practices {campaign.goal} {campaign.target_audience} "
         f"ad copy CTA creative guidelines"
     )
-    platform_context = rag_service.retrieve(rag_query, n_results=2)
+    platform_context = rag_service.retrieve(rag_query, n_results=3)
 
     user_prompt = (
         f"Original Ad Copy:\n{campaign.ad_copy}\n\n"
-        f"Campaign: {campaign.objective} on {campaign.platform}, targeting {campaign.target_audience}\n"
+        f"Campaign: {campaign.objective}\n"
+        f"Funnel Stage: {campaign.goal.title()} ({campaign.sub_purpose})\n"
+        f"Channels: {channels_text}\n"
+        f"Target Audience: {campaign.target_audience}\n"
         f"Analysis: tone={analysis.emotional_tone}, CTA={analysis.cta_strength}, "
         f"clarity={analysis.clarity}, score={analysis.overall_score}/100"
     )

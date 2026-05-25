@@ -30,6 +30,7 @@ These are required for the demo to work and impress judges.
 
 ## Tier 2 — Should Have (Strengthens Demo)
 
+- [ ] **`/docs` module** — live documentation page (submission requirement): pipeline walkthrough, architecture, tech stack, MCP integration, ML stats (Tier 1 — required for submission)
 - [ ] **ROAS-flip demo moment** — animated before/after number transitions (ML + QA layers in place; needs frontend polish)
 - [ ] **Error handling UI** — proper error states on InputPage if simulation fails (not just a silent hang)
 - [ ] **Loading skeleton** on ResultsPage while waiting
@@ -78,7 +79,7 @@ Do not build these during the competition sprint.
 
 Items we may adapt if time permits. Full context in `docs/design_reference.md`.
 
-- [ ] Multi-step campaign brief wizard (8-stage conversational flow with live brief side panel)
+- [x] Multi-step campaign brief wizard (7-step: Goal → Purpose → Channels → Creative → Audience → Budget → Review) — implemented as InputPage V3
 - [ ] Market context signals panel (seasonal events, competitor spend signals)
 - [ ] Per-channel breakdown table (ROAS/CTR/orders per platform — needs ML layer)
 - [x] Sticky bottom action bar on ResultsPage ("Export PDF / Get Launch Plan") — implemented in V2

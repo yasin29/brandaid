@@ -41,13 +41,23 @@ async def generate_persona_reactions(
     has_research = bool(audience_research and audience_research.strip())
     system_prompt = _PERSONA_SYSTEM_WITH_RESEARCH if has_research else _PERSONA_SYSTEM_FALLBACK
 
+    channels_text = ", ".join(campaign.channels) if campaign.channels else campaign.platform
+    goal_hint = {
+        "awareness": "Personas should vary in brand familiarity — some just discovering the brand, some vaguely aware.",
+        "consideration": "Personas should be actively evaluating options — weighing pros/cons, seeking information.",
+        "conversion": "Personas should be close to a purchase decision — motivated but potentially facing final objections.",
+    }.get(campaign.goal, "")
+
     user_prompt = (
         f"Campaign:\n"
+        f"- Funnel Stage: {campaign.goal.title()} ({campaign.sub_purpose})\n"
         f"- Objective: {campaign.objective}\n"
-        f"- Platform: {campaign.platform}\n"
+        f"- Channels: {channels_text}\n"
         f"- Target Audience: {campaign.target_audience}\n"
         f"- Ad Copy: {campaign.ad_copy}"
     )
+    if goal_hint:
+        user_prompt += f"\n\nPersona framing: {goal_hint}"
 
     if has_research:
         user_prompt += f"\n\nAudience Research (web-sourced, 2024-2025):\n{audience_research}"

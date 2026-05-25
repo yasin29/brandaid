@@ -31,6 +31,10 @@ async def run_simulation(campaign: CampaignInput) -> SimulationResult:
 
     # Stage 6a + 6b in parallel: re-analysis and re-personas are independent
     optimized_campaign = CampaignInput(
+        goal=campaign.goal,
+        sub_purpose=campaign.sub_purpose,
+        purpose_context=campaign.purpose_context,
+        channels=campaign.channels,
         objective=campaign.objective,
         platform=campaign.platform,
         target_audience=campaign.target_audience,

@@ -3,8 +3,15 @@ from typing import Optional
 
 
 class CampaignInput(BaseModel):
-    objective: str
-    platform: str
+    # Structured funnel fields (from new wizard)
+    goal: str = ""           # 'awareness' | 'consideration' | 'conversion'
+    sub_purpose: str = ""    # e.g. 'new-brand', 'direct-purchase', 'flash-sale'
+    purpose_context: dict = {}   # parsed from JSON; fields vary by sub_purpose
+    channels: list[str] = []     # e.g. ['meta', 'tiktok', 'google_search']
+    # Derived / legacy fields (auto-filled from goal + first channel)
+    objective: str = ""
+    platform: str = ""
+    # Common fields
     target_audience: str
     budget: str
     ad_copy: str

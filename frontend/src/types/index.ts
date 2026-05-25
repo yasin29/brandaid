@@ -1,10 +1,56 @@
+export interface PurposeContext {
+  // Awareness — New Brand
+  brandPersonality?: string[]
+  coreMessage?: string
+  // Awareness — Repositioning
+  currentPerception?: string
+  desiredPerception?: string
+  repositionReason?: string
+  // Awareness — Product Launch
+  productDescription?: string
+  targetSegment?: string
+  productHook?: string
+  // Consideration — Lead Generation
+  leadOffers?: string[]
+  postLeadFlow?: string
+  currentCplBaseline?: number | null
+  // Consideration — Engagement & Education
+  educationGap?: string
+  existingContent?: string
+  existingContentUrl?: string
+  // Consideration — Traffic & Intent
+  destinationUrl?: string
+  onSiteAction?: string
+  // Conversion — Direct Purchase
+  productName?: string
+  pricePoint?: number | null
+  targetType?: string
+  targetValue?: number | null
+  offerTypes?: string[]
+  // Conversion — Sign-up / Trial / Install
+  signupType?: string
+  paymentRequired?: string
+  currentCpiBaseline?: number | null
+  // Conversion — Flash Sale
+  promoOffer?: string
+  promoStrength?: string
+  promoStart?: string
+  promoEnd?: string
+  urgencyVisible?: string
+}
+
 export interface CampaignInput {
-  objective: string
-  platform: string
+  goal: string              // 'awareness' | 'consideration' | 'conversion'
+  sub_purpose: string       // e.g. 'new-brand', 'direct-purchase', 'flash-sale'
+  purpose_context: PurposeContext
+  channels: string[]        // e.g. ['meta', 'tiktok', 'google_search']
   target_audience: string
-  budget: string
+  budget: string            // formatted, e.g. '৳200,000'
   ad_copy: string
   image?: File
+  // Derived / backward-compat (auto-filled from goal + first channel)
+  objective?: string
+  platform?: string
 }
 
 export interface PersonaReaction {

@@ -13,7 +13,11 @@ _SYSTEM_PROMPT = (
     "each a short descriptive string (1-2 sentences)\n"
     "- overall_score: integer 1-100\n"
     "- dimension_scores: a nested object with the same 6 keys, each an integer 0-10 "
-    "(0 = very weak, 10 = excellent)"
+    "(0 = very weak, 10 = excellent)\n\n"
+    "Tailor your analysis to the campaign's funnel stage and specific purpose. "
+    "For Awareness campaigns emphasize emotional resonance and brand recall. "
+    "For Consideration campaigns focus on trust signals and engagement depth. "
+    "For Conversion campaigns prioritize CTA strength, urgency, and friction reduction."
 )
 
 
@@ -34,16 +38,36 @@ async def analyze_campaign(campaign: CampaignInput) -> CampaignAnalysis:
     return CampaignAnalysis(**data)
 
 
+def _format_purpose_context(ctx: dict, sub_purpose: str) -> str:
+    if not ctx:
+        return ""
+    lines = []
+    for k, v in ctx.items():
+        if v is None or v == "" or v == [] or v == {}:
+            continue
+        key_label = k.replace("_", " ").title()
+        lines.append(f"  {key_label}: {v}")
+    return "\n".join(lines)
+
+
 def _build_content(campaign: CampaignInput) -> list:
+    ctx_text = _format_purpose_context(campaign.purpose_context, campaign.sub_purpose)
+    channels_text = ", ".join(campaign.channels) if campaign.channels else campaign.platform
+
+    text_parts = [
+        f"Funnel Stage: {campaign.goal.title()} — {campaign.sub_purpose}",
+        f"Campaign Objective: {campaign.objective}",
+        f"Channels: {channels_text}",
+        f"Target Audience: {campaign.target_audience}",
+        f"Budget: {campaign.budget}",
+    ]
+    if ctx_text:
+        text_parts.append(f"Purpose Details:\n{ctx_text}")
+    text_parts.append(f"Ad Copy:\n{campaign.ad_copy}")
+
     text_block = {
         "type": "text",
-        "text": (
-            f"Campaign Objective: {campaign.objective}\n"
-            f"Platform: {campaign.platform}\n"
-            f"Target Audience: {campaign.target_audience}\n"
-            f"Budget: {campaign.budget}\n"
-            f"Ad Copy:\n{campaign.ad_copy}"
-        ),
+        "text": "\n".join(text_parts),
     }
 
     content = [text_block]

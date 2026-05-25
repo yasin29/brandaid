@@ -28,24 +28,37 @@ async def generate_forecast(
         for p in personas
     ])
 
+    # Use the primary channel for ML prediction; fall back to legacy platform field
+    primary_platform = campaign.channels[0] if campaign.channels else campaign.platform
+    channels_text = ", ".join(campaign.channels) if campaign.channels else campaign.platform
+
     ml = ml_forecast_service.predict(
-        platform=campaign.platform,
+        platform=primary_platform,
         objective=campaign.objective,
         budget=campaign.budget,
         campaign_score=analysis.overall_score,
     )
 
-    rag_query = f"{campaign.platform} CTR benchmark ROAS conversion rate {campaign.objective}"
+    rag_query = f"{channels_text} CTR benchmark ROAS conversion rate {campaign.objective}"
     benchmark_context = rag_service.retrieve(rag_query, n_results=2)
 
+    # Goal-specific metric focus hint for the LLM
+    goal_metric_hint = {
+        "awareness": "Focus engagement_estimate and conversion_trend on reach and recall metrics rather than direct conversions.",
+        "consideration": "Focus on CTR and lead quality; ROAS is secondary for this funnel stage.",
+        "conversion": "ROAS and CVR are the primary success metrics; give concrete conversion_trend estimates.",
+    }.get(campaign.goal, "")
+
     user_prompt = (
-        f"Campaign: {campaign.objective} on {campaign.platform} | Budget: {campaign.budget}\n"
+        f"Campaign: {campaign.objective} | Funnel: {campaign.goal} ({campaign.sub_purpose})\n"
+        f"Channels: {channels_text} | Budget: {campaign.budget}\n"
         f"Analysis score: {analysis.overall_score}/100\n"
         f"Persona reactions:\n{persona_summary}\n\n"
-        f"ML-predicted ranges:\n"
-        f"  CTR: {ml.ctr_range_str}  ROAS: {ml.roas_range_str} "
-        f"(platform: {ml.platform_used}, tier: {ml.budget_tier})\n"
+        f"ML-predicted ranges (primary channel: {ml.platform_used}, tier: {ml.budget_tier}):\n"
+        f"  CTR: {ml.ctr_range_str}  ROAS: {ml.roas_range_str}\n"
     )
+    if goal_metric_hint:
+        user_prompt += f"\nGoal framing: {goal_metric_hint}\n"
     if benchmark_context:
         user_prompt += f"\nBenchmark context:\n{benchmark_context}\n"
 
