@@ -52,5 +52,43 @@
       "q90": 14.392000000000001,
       "std": 6.446227525230406
     }
+  },
+  "LinkedIn": {
+    "_sources": "Databox Aug 2024, HockeyStack Labs 2025 (70+ B2B SaaS firms), NAV43 Q1-Q2 2025 (213M impressions), Dreamdata 2025 B2B Benchmark Report, Chartis Jan 2023-Sep 2024. CTR is for Sponsored Content / feed ads only (not Message Ads or Conversation Ads).",
+    "ctr": {
+      "q10": 0.20,
+      "q25": 0.38,
+      "q50": 0.53,
+      "q75": 0.87,
+      "q90": 1.05,
+      "std": 0.33
+    },
+    "roas": {
+      "q10": 0.60,
+      "q25": 1.20,
+      "q50": 2.50,
+      "q75": 5.00,
+      "q90": 8.00,
+      "std": 2.90
+    }
+  },
+  "Twitter/X": {
+    "_sources": "Statista Q2 2024 (0.86% median CTR), Focus Digital Q4 2024 (mobile 0.92%, desktop 0.79%), WebFX/Spiralytics 2025 (promoted tweets 1-3% range), X Corp MMM study ($2.70 avg ROAS), practitioner-reported range 2.4x-5.2x (Buffer 2024). Note: engagement rates declined ~20% YoY in 2024 post-acquisition.",
+    "ctr": {
+      "q10": 0.20,
+      "q25": 0.50,
+      "q50": 0.86,
+      "q75": 1.20,
+      "q90": 2.50,
+      "std": 0.90
+    },
+    "roas": {
+      "q10": 0.30,
+      "q25": 0.80,
+      "q50": 2.00,
+      "q75": 3.50,
+      "q90": 5.20,
+      "std": 1.91
+    }
   }
 }

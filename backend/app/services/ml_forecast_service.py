@@ -44,9 +44,22 @@ _PLATFORM_MAP = {
     "tiktok": "TikTok Ads",
     "google": "Google Ads",
     "youtube": "Google Ads",
-    "linkedin": "Meta Ads",   # closest available
-    "twitter": "Meta Ads",    # closest available
+    "linkedin": "Meta Ads",  # ML model has no LinkedIn encoder; Meta is closest
+    "twitter": "Meta Ads",   # same
     "x": "Meta Ads",
+}
+
+# Separate map for dist_stats lookup — LinkedIn and Twitter/X have their own benchmark stats
+_DIST_STATS_MAP = {
+    "instagram": "Meta Ads",
+    "facebook": "Meta Ads",
+    "meta": "Meta Ads",
+    "tiktok": "TikTok Ads",
+    "google": "Google Ads",
+    "youtube": "Google Ads",
+    "linkedin": "LinkedIn",
+    "twitter": "Twitter/X",
+    "x": "Twitter/X",
 }
 
 def _map_platform(platform: str) -> str:
@@ -54,7 +67,14 @@ def _map_platform(platform: str) -> str:
     for k, v in _PLATFORM_MAP.items():
         if k in key:
             return v
-    return "Meta Ads"  # safe default
+    return "Meta Ads"
+
+def _map_dist_key(platform: str) -> str:
+    key = platform.lower().strip()
+    for k, v in _DIST_STATS_MAP.items():
+        if k in key:
+            return v
+    return "Meta Ads"
 
 
 # ── Campaign type mapping (from objective string) ─────────────────────────────
@@ -166,11 +186,28 @@ class MLForecast:
     def roas_range_str(self) -> str:
         return f"{self.roas_low:.1f}x–{self.roas_high:.1f}x"
 
+    @property
+    def roi_direction(self) -> str:
+        """
+        Derive ROI direction from ML-predicted ROAS midpoint.
+        Thresholds reflect typical margin requirements:
+          <2.0x  → Negative  (most business models lose money below 2x ROAS)
+          2.0–4.0x → Neutral  (breakeven to marginally profitable)
+          >4.0x  → Positive
+        """
+        mid = (self.roas_low + self.roas_high) / 2
+        if mid < 2.0:
+            return "Negative"
+        if mid < 4.0:
+            return "Neutral"
+        return "Positive"
+
 
 def predict(platform: str, objective: str, budget: str, campaign_score: int) -> MLForecast:
     _load_models()
 
-    platform_key = _map_platform(platform)
+    platform_key = _map_platform(platform)   # for ML model encoding
+    dist_key = _map_dist_key(platform)       # for dist_stats lookup (LinkedIn/Twitter have own stats)
     campaign_type = _map_campaign_type(objective)
     budget_amount = _parse_budget(budget)
     tier = _budget_tier(budget_amount)
@@ -186,14 +223,14 @@ def predict(platform: str, objective: str, budget: str, campaign_score: int) -> 
     )
     base_ctr = float(_ctr_model.predict(X)[0])
 
-    ctr_lo, ctr_hi = _ctr_range(base_ctr, platform_key, campaign_score)
-    roas_lo, roas_hi = _roas_range(platform_key, campaign_score)
+    ctr_lo, ctr_hi = _ctr_range(base_ctr, dist_key, campaign_score)
+    roas_lo, roas_hi = _roas_range(dist_key, campaign_score)
 
     return MLForecast(
         ctr_low=ctr_lo,
         ctr_high=ctr_hi,
         roas_low=roas_lo,
         roas_high=roas_hi,
-        platform_used=platform_key,
+        platform_used=dist_key,
         budget_tier=tier,
     )

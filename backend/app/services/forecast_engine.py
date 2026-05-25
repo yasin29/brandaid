@@ -60,6 +60,8 @@ async def generate_forecast(
     )
 
     data = json.loads(response.choices[0].message.content)
+    # Override LLM's roi_direction with the data-driven ML value — LLMs skew optimistic
+    data["forecast"]["roi_direction"] = ml.roi_direction
     forecast = ForecastMetrics(**data["forecast"])
     risks = data.get("risks", [])
     return forecast, risks
