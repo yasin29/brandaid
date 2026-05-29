@@ -68,7 +68,7 @@ function ExpandedResult({ record, onClose }: { record: SimulationRecord; onClose
         </div>
         <ResultsPage
           result={record.result}
-          campaignSummary={{ objective: record.objective, platform: record.platform }}
+          campaignSummary={{ objective: record.objective, platform: record.platform, ad_copy: record.ad_copy_preview }}
           onReset={onClose}
         />
       </div>

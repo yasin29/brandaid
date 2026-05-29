@@ -24,7 +24,7 @@ These are required for the demo to work and impress judges.
 - [x] **QA reviewer agent (Stage 7)** — independent LLM second-pass with 7 quality criteria; `QAReviewPanel` on ResultsPage
 - [x] **Calculator tool in QA** — OpenAI function calling (`verify_campaign_math`); two-pass flow; catches ROAS vs ROI direction contradictions
 - [x] **Prompt caching + token optimization** — stable system prompts, `asyncio.gather()` parallelization, trimmed token budgets
-- [ ] **Deployment** — host backend + serve frontend for demo day; update `VITE_API_URL`
+- [x] **Deployment** — live at `https://brandaid.rultest4.com/`; Docker images built locally and piped to server via `docker save | docker load`; `.env` written server-side; nginx reverse proxy handles domain routing
 
 ---
 
@@ -47,9 +47,9 @@ These are required for the demo to work and impress judges.
 
 ---
 
-## Tier 4 — Post-Competition Only
+## Tier 4 — Post-Competition
 
-Do not build these during the competition sprint.
+Competition is complete. These are priorities for the next phase as the product evolves.
 
 - [ ] User authentication (Clerk / Supabase)
 - [ ] Campaign history / saved simulations
@@ -72,6 +72,8 @@ Do not build these during the competition sprint.
 | 4 | Image uploads accumulate in `backend/uploads/` with no cleanup | Low | Open |
 | 5 | `max_tokens` not supported by newer OpenAI models — replaced with `max_completion_tokens` in all service files | Medium | Fixed |
 | 6 | ChromaDB re-indexes from scratch on every server start if `chroma_db/` is empty — acceptable for demo; takes ~5s | Low | By design |
+| 7 | Unused imports (`Zap`, `Layers`) in `DocsPage.tsx` caused TypeScript build error blocking Docker image build | Low | Fixed |
+| 8 | `campaignSummary` in `HistoryPage.tsx` missing `ad_copy` field required by `ResultsPage` props — passed `ad_copy_preview` as fallback | Low | Fixed |
 
 ---
 

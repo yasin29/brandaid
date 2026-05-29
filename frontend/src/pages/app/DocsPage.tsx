@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import {
-  Zap, Brain, Users, BarChart3, Lightbulb, RefreshCw, ShieldCheck,
+  Brain, Users, BarChart3, Lightbulb, RefreshCw, ShieldCheck,
   Database, Server, Globe, Code2, CheckCircle, ExternalLink,
   Cpu, BookOpen, FlaskConical, Network, ArrowRight, Terminal,
-  Layers, GitBranch,
+  GitBranch,
 } from 'lucide-react'
 
 const API_BASE = import.meta.env.VITE_API_BASE ?? 'http://localhost:8000'

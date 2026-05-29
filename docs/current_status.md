@@ -1,12 +1,10 @@
 # Current Status
 
-**Last updated:** 2026-05-25 (evening-3)
+**Last updated:** 2026-05-30
 **Branch:** main
-**Last commit:** `cfa7400` — Enrich RAG knowledge base with 2024-2025 benchmark data; reset ChromaDB
+**Last commit:** `48db471` — Add product shell: landing, login, pricing, app portal with sidebar
 
-> Session 2026-05-25 (evening): MCP integration added — Brand-AId MCP server + Brave Search MCP client
-> Session 2026-05-25 (late): 7-step wizard InputPage + structured campaign fields wired end-to-end (frontend + backend + AI prompts)
-> Session 2026-05-25 (late-2): UI fixes — brand personality inputs grid layout (overflow fix), budget step switched to USD with $0 min and type-in text input
+> Session 2026-05-30: Production deployment — Dockerized, live at https://brandaid.rultest4.com/. TypeScript build errors fixed (unused imports in DocsPage, missing ad_copy in HistoryPage). Both containers running with restart: unless-stopped.
 
 ---
 
@@ -14,10 +12,12 @@
 
 ### Infrastructure
 - [x] Git repo initialized and connected to GitHub (`alviriseup/brand-AId`)
-- [x] `.gitignore` updated (Node, venv, .env, dist)
+- [x] `.gitignore` updated (Node, venv, .env, dist, deploy/)
 - [x] `.env.example` committed with all required keys and comments
 - [x] `CLAUDE.md` created with project rules and architecture summary
 - [x] `docs/` folder created with persistent context files
+- [x] **Docker setup** — `docker-compose.yml`, `backend/Dockerfile`, `frontend/Dockerfile`, `frontend/nginx.conf`; all data baked inside image; nginx proxies `/api/*` to backend
+- [x] **Production deployment** — live at `https://brandaid.rultest4.com/` on server `89.147.102.48` via JumpServer (`172.16.1.250:2222`); images transferred via `docker save | docker load`; `.env` written server-side only (API key never in image); both containers running with `restart: unless-stopped`
 
 ### Backend
 - [x] FastAPI app scaffolded (`backend/main.py`)
@@ -114,9 +114,9 @@
 - [ ] Loading skeleton on ResultsPage
 
 ### Deployment
-- [x] Docker setup — `docker-compose.yml`, `backend/Dockerfile`, `frontend/Dockerfile`, `frontend/nginx.conf`; all data baked inside image; nginx proxies /api/* to backend (single port 80)
-- [ ] Deploy to server — waiting for server credentials
-- [ ] `VITE_API_BASE` env var handled — empty string in Docker build makes API calls relative, proxied by nginx
+- [x] Docker setup — `docker-compose.yml`, `backend/Dockerfile`, `frontend/Dockerfile`, `frontend/nginx.conf`; all data baked inside image; nginx proxies `/api/*` to backend
+- [x] `VITE_API_BASE` set to empty string in Docker build — all API calls are relative, proxied by nginx
+- [x] **Live at `https://brandaid.rultest4.com/`** — deployed to `89.147.102.48` via JumpServer
 
 ### Polish
 - [ ] Uploaded images not cleaned up from `backend/uploads/`
@@ -125,10 +125,12 @@
 
 ---
 
-## Immediate Next Steps (Priority Order)
+## Immediate Next Steps (Post-Competition)
 
-1. **Deployment** — configure for demo day (frontend static + backend hosted); update `VITE_API_URL`
-2. **Restart backend** — `uvicorn main:app --reload` to trigger ChromaDB re-index with enriched docs
-3. **ROAS-flip demo moment** — polish the before/after section with animated number transitions
-4. **Error handling UI** — prevent silent failures on InputPage
-5. **Mobile responsiveness** — at least make it usable on a tablet for the demo
+> **Competition submitted.** Live at `https://brandaid.rultest4.com/`. Below are priorities for the next development phase.
+
+1. **ROAS-flip demo moment** — animated before/after number transitions (ML + QA layers are in place; needs frontend polish)
+2. **Error handling UI** — proper error states on InputPage if simulation fails
+3. **Mobile responsiveness** — make all screens usable on tablet/mobile
+4. **Retry/backoff on OpenAI errors** — exponential backoff for rate limit / timeout errors
+5. **Re-deploy after changes** — see `docs/deployment.md` for the re-deploy process (images must be rebuilt and piped to server)
