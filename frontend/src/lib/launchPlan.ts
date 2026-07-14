@@ -1,4 +1,4 @@
-import type { SimulationResult } from '@/types'
+import type { SimulationResult, DimensionScores } from '@/types'
 
 type CampaignSummary = { objective: string; platform: string; ad_copy: string } | null
 
@@ -38,7 +38,7 @@ function levelBadge(level: string): string {
   return map[level] ?? 'background:#F1F5F9;color:#475569'
 }
 
-const DIMENSIONS: Array<{ key: keyof SimulationResult['campaign_analysis']; label: string }> = [
+const DIMENSIONS: Array<{ key: keyof DimensionScores; label: string }> = [
   { key: 'emotional_tone', label: 'Emotional Tone' },
   { key: 'cta_strength', label: 'CTA Strength' },
   { key: 'audience_fit', label: 'Audience Fit' },
