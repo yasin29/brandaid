@@ -4,7 +4,7 @@ from chromadb.config import Settings as ChromaSettings
 from openai import OpenAI
 from app.core.config import settings
 
-_sync_client = OpenAI(api_key=settings.openai_api_key)
+_sync_client = OpenAI(api_key=settings.openai_api_key, base_url=settings.openai_base_url)
 _chroma: chromadb.Collection | None = None
 
 KNOWLEDGE_BASE_DIR = os.path.join(os.path.dirname(__file__), "../../data/knowledge_base")

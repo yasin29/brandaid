@@ -47,6 +47,7 @@ export default function LandingPage() {
             <a href="#how-it-works" className="hover:text-white transition-colors">How it works</a>
             <a href="#features" className="hover:text-white transition-colors">Features</a>
             <Link to="/pricing" className="hover:text-white transition-colors">Pricing</Link>
+            <Link to="/tutorial" className="hover:text-white transition-colors">Tutorial</Link>
             <Link to="/docs" className="hover:text-white transition-colors">Docs</Link>
           </div>
           <div className="flex items-center gap-3">
@@ -73,7 +74,7 @@ export default function LandingPage() {
         <div className="relative z-10 max-w-4xl mx-auto">
           <div className="inline-flex items-center gap-2 bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-medium px-3 py-1.5 rounded-full mb-8">
             <Zap className="w-3 h-3" />
-            AI Campaign Simulation Engine · Built for Infinity AI Buildfest 2026
+            AI Campaign Simulation Engine · Build by Yasin Billah
           </div>
 
           <h1 className="text-5xl md:text-7xl font-bold tracking-tight leading-[1.08] mb-6">
@@ -224,10 +225,11 @@ export default function LandingPage() {
             <div className="w-5 h-5 rounded bg-indigo-600/80 flex items-center justify-center">
               <Sparkles className="w-3 h-3 text-white" />
             </div>
-            Brand-AId · Infinity AI Buildfest 2026
+            Brand-AId · Build by Yasin Billah
           </div>
           <div className="flex gap-6 text-sm text-slate-500">
             <Link to="/docs" className="hover:text-slate-300 transition-colors">Documentation</Link>
+            <Link to="/tutorial" className="hover:text-slate-300 transition-colors">Tutorial</Link>
             <Link to="/pricing" className="hover:text-slate-300 transition-colors">Pricing</Link>
             <Link to="/login" className="hover:text-slate-300 transition-colors">Sign in</Link>
           </div>

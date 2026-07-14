@@ -6,6 +6,13 @@ A record of key decisions made during development, with rationale. Read this bef
 
 ## AI & Models
 
+### Decision: Gemini free tier replaces OpenAI (2026-07-13)
+**Why:** No OpenAI budget; Gemini's free tier covers all three needs (chat, vision, embeddings) through its OpenAI-compatible endpoint (`https://generativelanguage.googleapis.com/v1beta/openai/`), so the `openai` SDK stays — only `base_url` and model names changed. The `OPENAI_*` env var names were deliberately kept to avoid churning every config reference.
+- **Chat: `gemini-3.1-flash-lite`** — must be a *non-thinking* model: all pipeline calls cap `max_completion_tokens` at 300–800, and thinking models (e.g. `gemini-3.5-flash`) burn the entire budget on internal reasoning and return empty content. Verified empirically.
+- **Embeddings: `gemini-embedding-001`** (3072 dims) — incompatible with an index built on OpenAI `text-embedding-3-small` (1536 dims); switching embedding models requires deleting `backend/data/chroma_db` and re-indexing.
+- **Casualty:** OpenAI's proprietary `web_search_preview` (Responses API) isn't supported on Gemini's compat layer — the audience-research fallback was removed; DuckDuckGo MCP is the only search path, degrading to static personas on failure.
+- **Constraint:** free tier is rate-limited (~10–15 req/min per model) — fine for demos, not for concurrent users.
+
 ### Decision: Model names read from `.env`, never hardcoded
 **Why:** OpenAI releases models frequently and pricing varies significantly (e.g. gpt-5.5 vs gpt-5.4-mini). Hardcoding creates brittleness. The `.env.example` provides sensible defaults with comments explaining the tradeoff.
 

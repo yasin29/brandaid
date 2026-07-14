@@ -355,8 +355,7 @@ export default function DocsPage() {
           <div className="flex-none bg-[#0D0D15] border border-white/5 rounded-2xl p-4 text-right">
             <LiveStatus />
             <div className="mt-3 text-[10px] text-slate-600 space-y-1">
-              <div>Infinity AI Buildfest 2026</div>
-              <div>Team: The Unbranded</div>
+              <div>Build by Yasin Billah</div>
             </div>
           </div>
         </div>
@@ -725,8 +724,8 @@ export default function DocsPage() {
       {/* ── Footer ── */}
       <div className="pb-8 text-center">
         <p className="text-xs text-slate-600">
-          Brand-AId · Infinity AI Buildfest 2026 · Team: The Unbranded ·{' '}
-          <a href="https://github.com/alviriseup/brand-AId" target="_blank" rel="noreferrer"
+          Brand-AId · Build by Yasin Billah ·{' '}
+          <a href="https://github.com/yasin29/brandaid" target="_blank" rel="noreferrer"
             className="text-indigo-400 hover:text-indigo-300 transition-colors inline-flex items-center gap-1">
             GitHub <ExternalLink className="w-3 h-3" />
           </a>

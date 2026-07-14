@@ -1,9 +1,8 @@
-# Submission Checklist — Infinity AI Buildfest 2026
+# Submission Checklist
 
 **Due:** May 30, 2026, 11:59 PM
 **Platform:** CloudCamp submission portal
-**Team:** The Unbranded
-**Event:** The Infinity AI Buildfest 2026
+**Built by:** Yasin Billah
 
 This doc maps every field in the submission form to what Brand-AId actually has,
 so you can copy-paste or adapt the answers directly. Fields marked ✅ are done;

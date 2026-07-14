@@ -246,3 +246,7 @@ deploy/
 # OS
 .DS_Store
 Thumbs.db
+
+# Claude Code local overrides / hook cache (not shared with the team)
+.claude/settings.local.json
+.claude/hooks/tsc-cache/

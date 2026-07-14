@@ -1,7 +1,6 @@
 # Deployment — Docker
 
-> **Competition context:** Dockerized deployment for Infinity AI Buildfest 2026 demo.
-> All data (ChromaDB, ML models, knowledge base) is baked inside the Docker image as required by management.
+> Dockerized deployment. All data (ChromaDB, ML models, knowledge base) is baked inside the Docker image.
 
 ## Live URL
 

@@ -13,6 +13,8 @@ The `docs/` folder is the source of truth for project state across sessions and 
 | [docs/backlog.md](docs/backlog.md) | Prioritized remaining work + known bugs |
 | [docs/deployment.md](docs/deployment.md) | How to deploy for the demo |
 
+Claude Code tooling (agents, slash commands, hooks, skills) lives in [.claude/](.claude/README.md) — see that README for what's available and what's just reference material.
+
 ---
 
 ## Documentation Sync Rule — ALWAYS ENFORCED
@@ -46,7 +48,7 @@ Context must never go stale. Apply these rules without being asked:
 
 ## What This Project Is
 
-Brand-AId is an AI-powered campaign simulation engine built for **Infinity AI Buildfest 2026** (Branding & Marketing / MarTech track).
+Brand-AId is an AI-powered campaign simulation engine. Build by Yasin Billah.
 
 Marketers input a campaign (copy + image + targeting info). The AI simulates how synthetic audience personas would react — forecasting performance *before* real money is spent.
 

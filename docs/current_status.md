@@ -1,8 +1,10 @@
 # Current Status
 
-**Last updated:** 2026-05-30
+**Last updated:** 2026-07-13
 **Branch:** main
-**Last commit:** `48db471` — Add product shell: landing, login, pricing, app portal with sidebar
+**Last commit:** `48db471` — Add product shell: landing, login, pricing, app portal with sidebar (uncommitted work since: Gemini migration, .claude framework)
+
+> Session 2026-07-13: **Migrated AI provider from OpenAI to Google Gemini (free tier)** via Gemini's OpenAI-compatible endpoint — chat model `gemini-3.1-flash-lite`, embeddings `gemini-embedding-001`. Same `openai` SDK, just `base_url` + model swaps (`config.py`, `openai_client.py`, `rag_service.py`). OpenAI-proprietary `web_search_preview` fallback removed from `audience_researcher.py` (DDG MCP is now the only search path). Backend venv rebuilt on this machine with Python 3.14.2 (old venv pointed at a missing Python 3.12 from another device). ChromaDB re-indexed with Gemini embeddings (3072 dims). Full simulation verified end-to-end: HTTP 200 in ~25s, all 8 result sections populated. Note: production deployment at brandaid.rultest4.com still runs the old OpenAI config — redeploy needed if the free key should be used there too.
 
 > Session 2026-05-30: Production deployment — Dockerized, live at https://brandaid.rultest4.com/. TypeScript build errors fixed (unused imports in DocsPage, missing ad_copy in HistoryPage). Both containers running with restart: unless-stopped.
 
@@ -11,7 +13,7 @@
 ## What Is Done
 
 ### Infrastructure
-- [x] Git repo initialized and connected to GitHub (`alviriseup/brand-AId`)
+- [x] Git repo initialized and connected to GitHub (`yasin29/brandaid`)
 - [x] `.gitignore` updated (Node, venv, .env, dist, deploy/)
 - [x] `.env.example` committed with all required keys and comments
 - [x] `CLAUDE.md` created with project rules and architecture summary

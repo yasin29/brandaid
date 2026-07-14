@@ -7,7 +7,9 @@ import DashboardPage from '@/pages/app/DashboardPage'
 import NewCampaignPage from '@/pages/app/NewCampaignPage'
 import HistoryPage from '@/pages/app/HistoryPage'
 import DocsPage from '@/pages/app/DocsPage'
+import TutorialPage from '@/pages/app/TutorialPage'
 import StandaloneDocsPage from '@/pages/StandaloneDocsPage'
+import StandaloneTutorialPage from '@/pages/StandaloneTutorialPage'
 import ProtectedRoute from '@/components/ProtectedRoute'
 
 export default function App() {
@@ -15,6 +17,7 @@ export default function App() {
     <Routes>
       <Route path="/" element={<LandingPage />} />
       <Route path="/docs" element={<StandaloneDocsPage />} />
+      <Route path="/tutorial" element={<StandaloneTutorialPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/pricing" element={<PricingPage />} />
       <Route
@@ -30,6 +33,7 @@ export default function App() {
         <Route path="new" element={<NewCampaignPage />} />
         <Route path="history" element={<HistoryPage />} />
         <Route path="docs" element={<DocsPage />} />
+        <Route path="tutorial" element={<TutorialPage />} />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

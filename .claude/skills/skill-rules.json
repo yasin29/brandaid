@@ -1,0 +1,68 @@
+{
+  "version": "1.0",
+  "description": "Base skill triggers - shared across all projects",
+  "skills": {
+    "skill-developer": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["create skill", "new skill", "skill development", "skill-rules", "build skill"],
+        "intentPatterns": [
+          "(create|build|add|develop).*skill",
+          "skill.*?(template|structure|format)"
+        ]
+      }
+    },
+    "error-tracking": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["sentry", "error tracking", "error monitoring", "exception tracking", "crash reporting"],
+        "intentPatterns": [
+          "(setup|configure|add|implement).*?(sentry|error.*track)",
+          "(capture|log|report).*?(error|exception)"
+        ]
+      }
+    },
+    "generate-ppt": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["presentation", "ppt", "powerpoint", "slides", "reveal.js", "townhall", "deck", "generate-ppt"],
+        "intentPatterns": [
+          "(create|generate|build|make).*?(presentation|slides|deck|ppt)",
+          "(html|reveal).*?presentation",
+          "brand.*?(presentation|slides)"
+        ]
+      },
+      "fileTriggers": {
+        "pathPatterns": [
+          "presentations/**/*.html",
+          "presentations/**/*.md",
+          ".claude/**/reveal*.html"
+        ]
+      }
+    },
+    "notion-ticket-reviewer": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "promptTriggers": {
+        "keywords": ["notion ticket", "review ticket", "notion task", "ticket reviewer", "notion database", "notion review", "fix ticket"],
+        "intentPatterns": [
+          "(review|fix|complete|process).*?(notion|ticket)",
+          "(fetch|get|list|query).*?(notion|ticket|task)",
+          "notion.*?(review|update|status)",
+          "fix ticket:?\\s*",
+          "fix next ticket"
+        ]
+      },
+      "commands": [
+        "fix-ticket"
+      ]
+    }
+  }
+}

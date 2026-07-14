@@ -7,8 +7,8 @@ Common development tasks and how to do them.
 ## First-Time Setup (new machine)
 
 ```bash
-git clone https://github.com/alviriseup/brand-AId.git
-cd brand-AId
+git clone https://github.com/yasin29/brandaid.git
+cd brandaid
 
 # 1. Copy env template and fill in your API key
 cp .env.example .env

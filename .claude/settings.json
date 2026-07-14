@@ -1,13 +1,55 @@
 {
   "mcpServers": {
     "brand-aid": {
-      "command": "/home/alvi105/Projects/ai-buildfest/brand-AId/backend/.venv/bin/python",
+      "command": "${CLAUDE_PROJECT_DIR}/backend/.venv/Scripts/python.exe",
       "args": [
-        "/home/alvi105/Projects/ai-buildfest/brand-AId/mcp_server/server.py"
+        "${CLAUDE_PROJECT_DIR}/mcp_server/server.py"
       ],
       "env": {
         "BRAND_AID_BACKEND_URL": "http://localhost:8000"
       }
     }
+  },
+  "permissions": {
+    "allow": [
+      "Edit:*",
+      "Write:*",
+      "Bash:git *",
+      "Bash:npm *",
+      "Bash:python *",
+      "Bash:uvicorn *"
+    ],
+    "deny": [
+      "Edit:.env",
+      "Edit:.env.*",
+      "Bash:rm -rf *"
+    ]
+  },
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/skill-activation-prompt.sh"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|MultiEdit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/error-handling-reminder.sh"
+          },
+          {
+            "type": "command",
+            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/doc-update-reminder.sh"
+          }
+        ]
+      }
+    ]
   }
 }

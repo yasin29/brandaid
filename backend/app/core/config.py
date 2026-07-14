@@ -3,8 +3,9 @@ from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
     openai_api_key: str
-    openai_chat_model: str = "gpt-5.4-mini"
-    openai_embedding_model: str = "text-embedding-3-small"
+    openai_base_url: str = "https://generativelanguage.googleapis.com/v1beta/openai/"
+    openai_chat_model: str = "gemini-3.1-flash-lite"
+    openai_embedding_model: str = "gemini-embedding-001"
 
     frontend_url: str = "http://localhost:5173"
 
@@ -12,7 +13,9 @@ class Settings(BaseSettings):
     chroma_collection_name: str = "brand_aid_knowledge"
 
     class Config:
-        env_file = ".env"
+        # .env lives at the repo root; the backend usually runs from backend/,
+        # so check both the cwd and one level up.
+        env_file = (".env", "../.env")
         env_file_encoding = "utf-8"
 
 

@@ -197,7 +197,7 @@ export default function PricingPage() {
       <footer className="border-t border-white/5 py-8 px-6 text-center text-xs text-slate-600">
         <Link to="/" className="hover:text-slate-400 transition-colors">← Back to home</Link>
         <span className="mx-3">·</span>
-        Brand-AId · Infinity AI Buildfest 2026
+        Brand-AId · Build by Yasin Billah
       </footer>
     </div>
   )

@@ -1,12 +1,8 @@
 # AI Brand Simulation Engine — Project Context
 
-## Competition Context
+## Project Context
 
-We are participating in:
-
-- Competition: Infinity AI Buildfest 2026
-- Track: Innovation Tracks Challenge
-- Category: Branding & Marketing (MarTech)
+Build by Yasin Billah.
 
 Challenge:
 Build an AI-first brand simulation platform that predicts campaign outcomes before launch.

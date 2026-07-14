@@ -2,7 +2,7 @@
 
 > AI-powered campaign simulation engine — test your ad against a synthetic market before you spend a dollar.
 
-Built for **Infinity AI Buildfest 2026** · Branding & Marketing / MarTech track · Team: The Unbranded
+Build by **Yasin Billah**
 
 ---
 
@@ -180,9 +180,7 @@ See the [`docs/`](docs/) folder for full context:
 
 ---
 
-## Competition Submission
+## Credits
 
-**Event:** Infinity AI Buildfest 2026  
-**Track:** Branding & Marketing / MarTech  
-**Deadline:** May 30, 2026, 11:59 PM  
-**Submission details:** [`docs/submission_checklist.md`](docs/submission_checklist.md)
+**Built by:** Yasin Billah  
+**Repository:** [github.com/yasin29/brandaid](https://github.com/yasin29/brandaid)
