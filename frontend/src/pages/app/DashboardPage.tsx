@@ -1,7 +1,9 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { PlusCircle, TrendingUp, BarChart3, Zap, CheckCircle, XCircle, MinusCircle, ArrowRight, Clock } from 'lucide-react'
-import { getHistory } from '@/lib/history'
+import { getHistory, type SimulationRecord } from '@/lib/history'
 import { getUser } from '@/lib/auth'
+import SimulationOverlay from '@/components/SimulationOverlay'
 
 const PLATFORM_COLORS: Record<string, string> = {
   instagram: 'bg-pink-500/15 text-pink-400',
@@ -44,6 +46,7 @@ export default function DashboardPage() {
   const history = getHistory()
   const user = getUser()
   const recent = history.slice(0, 5)
+  const [expanded, setExpanded] = useState<SimulationRecord | null>(null)
 
   const avgScore = history.length
     ? Math.round(history.reduce((s, r) => s + r.overall_score, 0) / history.length)
@@ -123,7 +126,11 @@ export default function DashboardPage() {
         ) : (
           <div className="divide-y divide-white/5">
             {recent.map(r => (
-              <div key={r.id} className="px-6 py-4 flex items-center gap-4 hover:bg-white/2 transition-colors">
+              <button
+                key={r.id}
+                onClick={() => setExpanded(r)}
+                className="w-full px-6 py-4 flex items-center gap-4 text-left hover:bg-white/2 transition-colors group"
+              >
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1">
                     <span className={`text-xs font-medium px-2 py-0.5 rounded-md ${platformColor(r.platform)}`}>
@@ -131,7 +138,7 @@ export default function DashboardPage() {
                     </span>
                     <span className="text-xs text-slate-500">{r.objective}</span>
                   </div>
-                  <p className="text-sm text-slate-300 truncate">{r.ad_copy_preview}</p>
+                  <p className="text-sm text-slate-300 truncate group-hover:text-white transition-colors">{r.ad_copy_preview}</p>
                 </div>
                 <div className="flex items-center gap-6 flex-none text-right">
                   <div className="hidden sm:block">
@@ -145,7 +152,7 @@ export default function DashboardPage() {
                     {timeAgo(r.timestamp)}
                   </div>
                 </div>
-              </div>
+              </button>
             ))}
           </div>
         )}
@@ -164,6 +171,11 @@ export default function DashboardPage() {
             ))}
           </div>
         </div>
+      )}
+
+      {/* Expanded result overlay */}
+      {expanded && (
+        <SimulationOverlay record={expanded} onClose={() => setExpanded(null)} />
       )}
     </div>
   )
