@@ -9,6 +9,7 @@ import {
   Tooltip,
 } from 'chart.js'
 import type { SimulationResult, DimensionScores, QAReview } from '@/types'
+import { openLaunchPlan } from '@/lib/launchPlan'
 
 Chart.register(RadarController, RadialLinearScale, PointElement, LineElement, Filler, Tooltip)
 
@@ -619,7 +620,10 @@ export default function ResultsPage({ result, campaignSummary, onReset }: Props)
           >
             ↺ Rerun with edits
           </button>
-          <button className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-sm font-bold transition-all duration-150">
+          <button
+            onClick={() => openLaunchPlan(result, campaignSummary)}
+            className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-sm font-bold transition-all duration-150"
+          >
             Get Launch Plan →
           </button>
         </div>
@@ -864,7 +868,10 @@ export default function ResultsPage({ result, campaignSummary, onReset }: Props)
             >
               ← Rerun with edits
             </button>
-            <button className="bg-gradient-to-br from-emerald-600 to-emerald-800 text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-[0_6px_16px_-4px_rgba(5,150,105,0.5)] hover:shadow-[0_10px_24px_-4px_rgba(5,150,105,0.65)] hover:-translate-y-0.5 transition-all duration-200">
+            <button
+              onClick={() => openLaunchPlan(result, campaignSummary)}
+              className="bg-gradient-to-br from-emerald-600 to-emerald-800 text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-[0_6px_16px_-4px_rgba(5,150,105,0.5)] hover:shadow-[0_10px_24px_-4px_rgba(5,150,105,0.65)] hover:-translate-y-0.5 transition-all duration-200"
+            >
               → Get Launch Plan
             </button>
           </div>
