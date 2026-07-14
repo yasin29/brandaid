@@ -20,4 +20,6 @@ RUN rm -rf .venv __pycache__ .env
 
 EXPOSE 8000
 
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Render (and other PaaS hosts) inject $PORT and expect the app to bind to it.
+# Falls back to 8000 for docker-compose / local runs where $PORT isn't set.
+CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}"]

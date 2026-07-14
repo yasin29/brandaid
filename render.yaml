@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: brandaid-backend
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: OPENAI_BASE_URL
+        value: https://generativelanguage.googleapis.com/v1beta/openai/
+      - key: OPENAI_CHAT_MODEL
+        value: gemini-3.1-flash-lite
+      - key: OPENAI_EMBEDDING_MODEL
+        value: gemini-embedding-001
+      - key: FRONTEND_URL
+        value: "*"
+      - key: CHROMA_DB_PATH
+        value: data/chroma_db
+      - key: CHROMA_COLLECTION_NAME
+        value: brand_aid_knowledge
